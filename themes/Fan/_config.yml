@@ -28,15 +28,11 @@ links:
   enable: true
   data:
     -
-      url: https://github.com/fan-lv
+      url: https://github.com/CloneableX
       text: GitHub
     -
-      url: mailto:15757856604@163.com
+      url: mailto:cloneable@163.com
       text: E-Mail
-    -
-      url: tencent://message/?uin=1019593584&Site=&Menu=yes
-      text: QQ
-
 
 # busuanzi count for PV / UV in site
 busuanzi:
