@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-clo.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-clo.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-clo.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo-clo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: true,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="摘要:  本章节主要讲解「归并排序」（ Merge Sort ）和「快速排序」（ Quick Sort ），这两种排序主要应用了分治的思想，时间复杂度都为 $O(nlogn)$，但是在实际生产中快速排序使用更加广泛。  归并排序原理归并排序将一组数据进行一分为二的分解操作，直到子数组中只有一个元素为止，此时将分解的子数组进行合并，在合并的过程中进行排序，合并后的数组就是一个有序的数组，按照这种操作">
+<meta name="keywords" content="数据结构与算法之美笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法之美笔记——排序（下）">
+<meta property="og:url" content="https://www.cloneable.cn/2019/05/25/data_structure_algorithm/数据结构与算法之美笔记——排序（下）/index.html">
+<meta property="og:site_name" content="Cloneable的小站">
+<meta property="og:description" content="摘要:  本章节主要讲解「归并排序」（ Merge Sort ）和「快速排序」（ Quick Sort ），这两种排序主要应用了分治的思想，时间复杂度都为 $O(nlogn)$，但是在实际生产中快速排序使用更加广泛。  归并排序原理归并排序将一组数据进行一分为二的分解操作，直到子数组中只有一个元素为止，此时将分解的子数组进行合并，在合并的过程中进行排序，合并后的数组就是一个有序的数组，按照这种操作">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-26T09:52:47.440Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构与算法之美笔记——排序（下）">
+<meta name="twitter:description" content="摘要:  本章节主要讲解「归并排序」（ Merge Sort ）和「快速排序」（ Quick Sort ），这两种排序主要应用了分治的思想，时间复杂度都为 $O(nlogn)$，但是在实际生产中快速排序使用更加广泛。  归并排序原理归并排序将一组数据进行一分为二的分解操作，直到子数组中只有一个元素为止，此时将分解的子数组进行合并，在合并的过程中进行排序，合并后的数组就是一个有序的数组，按照这种操作">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://www.cloneable.cn/2019/05/25/data_structure_algorithm/数据结构与算法之美笔记——排序（下）/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>数据结构与算法之美笔记——排序（下） | Cloneable的小站</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/CloneableX" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cloneable的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.cloneable.cn/2019/05/25/data_structure_algorithm/数据结构与算法之美笔记——排序（下）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cloneable">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cloneable的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据结构与算法之美笔记——排序（下）
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-25 14:38:55" itemprop="dateCreated datePublished" datetime="2019-05-25T14:38:55+08:00">2019-05-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-26 17:52:47" itemprop="dateModified" datetime="2019-05-26T17:52:47+08:00">2019-05-26</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据结构与算法/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/05/25/data_structure_algorithm/数据结构与算法之美笔记——排序（下）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/25/data_structure_algorithm/数据结构与算法之美笔记——排序（下）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">6.2k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">5 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>摘要:</strong></p>
+<blockquote>
+<p>本章节主要讲解「归并排序」（ Merge Sort ）和「快速排序」（ Quick Sort ），这两种排序主要应用了分治的思想，时间复杂度都为 $O(nlogn)$，但是在实际生产中快速排序使用更加广泛。</p>
+</blockquote>
+<h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>归并排序将一组数据进行一分为二的分解操作，直到子数组中只有一个元素为止，此时将分解的子数组进行合并，在合并的过程中进行排序，合并后的数组就是一个有序的数组，按照这种操作方式循环合并拆分的数组，最后合并完成的数组就是已经完成排序的完整数组。</p>
+<h4 id="实现逻辑解析"><a href="#实现逻辑解析" class="headerlink" title="实现逻辑解析"></a>实现逻辑解析</h4><p>通过上一节的归并排序的逻辑描述可以看出，拆分数组与合并数组就是一个递归的过程，在递归章节讲过如果要实现递归代码最重要是的找到递推公式和终止条件。</p>
+<p>根据归并排序的逻辑可以得到如下的递推公式和终止条件。</p>
+<blockquote>
+<p>递推公式 $merge_sort(p,r)=merge(merge_sort(p,q),merge_sort(q+1,r))$<br>终止条件 $p\geq r$</p>
+</blockquote>
+<p>主要说一下上面公式中参数，p 和 r 分别表示数组头、尾的元素下标，q 表示数组中间元素的下标，满足公式 $q=\frac{p+r}2$，当 $p\geq r$ 时就是数组被拆分到只有一个元素的时候，这个时候拆分终止。</p>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><h5 id="递归代码的实现"><a href="#递归代码的实现" class="headerlink" title="递归代码的实现"></a>递归代码的实现</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span>[] array, <span class="keyword">int</span> head, <span class="keyword">int</span> tail)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(head &gt;= tail) &#123;<span class="keyword">return</span>;&#125;</span><br><span class="line"></span><br><span class="line">  mergeSort(array, head, (head + tail) / <span class="number">2</span>);</span><br><span class="line">  mergeSort(array, (head + tail) / <span class="number">2</span> + <span class="number">1</span>, tail);</span><br><span class="line">  merge(array, head, tail);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="merge-函数的实现"><a href="#merge-函数的实现" class="headerlink" title="merge 函数的实现"></a>merge 函数的实现</h5><p>从代码中可以看到，归并排序的重点在于 merge 方法的实现，接下来我们分析一下 merge 函数如何实现。</p>
+<p>我们申请一个临时数组用来保存合并后的数组，当合并完成后把临时数组中的元素迁移至原数组中相应位置。合并过程中需要对两个子数组的元素有序合并，根据归并排序的逻辑两个子数组已经是有序的，我们可以通过两个指针 i 和 j 分别指向两个子数据的头元素，遍历数组并且对比 i 和 j 指向的元素大小，较小的元素就放入临时数组中，并且相应的指针自增 1，指向相应数组的下一个元素，直到其中的一个元素遍历完。</p>
+<p>其中的一个子数组的元素遍历结束，也就意味着这个子数组的元素已经有序合并完成，但另外一个子数组的元素依然没有完全合并完成，因为子数组本就有序，我们只需要将剩下的群组元素按顺序添加到临时数组的尾部，这样临时数组就是合并两个子数组完成的有序数组了，最后只需要临时数组中的元素迁移至原数组相应的位置即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span>[] array, <span class="keyword">int</span> head, <span class="keyword">int</span> tail)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i = head, midPoint = (head + tail) / <span class="number">2</span>, j = midPoint + <span class="number">1</span>, k = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span>[] temp = <span class="keyword">new</span> <span class="keyword">int</span>[tail - head + <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// merge sub arrays to temp</span></span><br><span class="line">  <span class="keyword">while</span>(i &lt;= midPoint &amp;&amp; j &lt;= tail) &#123;</span><br><span class="line">    <span class="keyword">if</span>(array[i] &lt;= array[j]) &#123;</span><br><span class="line">      temp[k++] = array[i++];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      temp[k++] = array[j++];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// merge extra elements of sub arrays to temp</span></span><br><span class="line">  <span class="keyword">int</span> start = i, end = midPoint;</span><br><span class="line">  <span class="keyword">if</span>(j &lt;= tail) &#123;</span><br><span class="line">    start = j;</span><br><span class="line">    end = tail;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>(start &lt;= end) &#123;</span><br><span class="line">    temp[k++] = array[start++];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// move temp to array</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> s = <span class="number">0</span>; s &lt; k; s++) &#123;</span><br><span class="line">    array[head + s] = temp[s];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="简化-merge-函数"><a href="#简化-merge-函数" class="headerlink" title="简化 merge 函数"></a>简化 merge 函数</h5><p>上一节分析并且实现了 merge 函数， 其实可以通过哨兵对 merge 函数代码进行简化。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">mergeWithGuard</span><span class="params">(<span class="keyword">int</span>[] array, <span class="keyword">int</span> head, <span class="keyword">int</span> tail)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i = head, midPoint = (head + tail) / <span class="number">2</span>, j = midPoint + <span class="number">1</span>, k = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span>[] temp = <span class="keyword">new</span> <span class="keyword">int</span>[tail - head + <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// make max as guard</span></span><br><span class="line">  <span class="keyword">int</span> max = array[midPoint];</span><br><span class="line">  <span class="keyword">if</span>(array[tail] &gt; max) &#123;</span><br><span class="line">    max = array[tail];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">boolean</span> isGuard = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// merge sub arrays to temp</span></span><br><span class="line">  <span class="keyword">while</span>(i &lt;= midPoint &amp;&amp; j &lt;= tail) &#123;</span><br><span class="line">    <span class="keyword">if</span>(array[i] &lt;= array[j]) &#123;</span><br><span class="line">      temp[k++] = array[i++];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      temp[k++] = array[j++];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// add guard</span></span><br><span class="line">    <span class="keyword">if</span>((i &gt; midPoint || j &gt; tail) &amp;&amp; !isGuard) &#123;</span><br><span class="line">      <span class="keyword">if</span>(i &gt; midPoint) &#123;</span><br><span class="line">        i--;</span><br><span class="line">        array[i] = max;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        j--;</span><br><span class="line">        array[j] = max;</span><br><span class="line">      &#125;</span><br><span class="line">      isGuard = <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// move temp to array</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> s = <span class="number">0</span>; s &lt; k; s++) &#123;</span><br><span class="line">    array[head + s] = temp[s];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里哨兵是两个子数组中的最大值，基于两个子数组有序的条件，比较两个子数组的最后一个元素就可以得到结果，当一个子数组被遍历结束后将哨兵插入这个子数组的末尾，并将子数组的相应指针指向尾部，此时循环就不会结束，直到将另一个子数组的所有元素也合并进临时数组才会结束。这里的哨兵就可以简化掉将未遍历完的子数组元素合并至临时数组的代码。</p>
+<h4 id="执行效率分析"><a href="#执行效率分析" class="headerlink" title="执行效率分析"></a>执行效率分析</h4><h5 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h5><p>分析归并排序的时间复杂度其实就是在分析递归的时间复杂度。归并排序的递归方法时间复杂度主要由三部分构成，两个拆分后的子数组归并排序的时间复杂度和合并数组的时间复杂度，可以转换为如下公式。</p>
+<blockquote>
+<p>$T(c)=T(a)+T(b)+K$<br>T 表示消耗的时间<br>c 表示归并排序未分解的数组<br>a 和 b 分别表示归并排序两个拆分后的子数组<br>K 表示合并数组消耗的时间<br>当归并排序元素个数为 1 的数组时消耗时间是个常数，$T(1)=C$</p>
+</blockquote>
+<p>其实<strong>分析递归算法的时间复杂度也是按照递推公式</strong>。归并排序的合并操作时间复杂度是 $O(n)$，所以时间复杂度的计算公式可以转换为 $T(n)=T(\frac n2)+T(\frac n2)+n=2T(\frac n2)+n$，假设将大小为 n 的数组进行拆分至大小为 1 的数组需要 k 次，根据公式进行递推。</p>
+<blockquote>
+<p>$T(n)=2\times T(\frac n2)+n=2\times(2\times T(\frac n4)+\frac n2)+n=4\times T(\frac n4)+2n=<br>4\times(2\times T(\frac n8)+\frac n4)+2n=8\times T(\frac n8)+3n=…=2^k\times T(\frac n{2^k})+k\times n$</p>
+</blockquote>
+<p>因为第 k 次时拆分后子数组大小为 1，所以有等式关系 $\frac{n}{2^k}=1$，即可以得到 $k=\log_2n$，将 k 代入第 k 次递推公式，$T(n)=2^{\log_2n}\times T(1)+n\times\log_2n=n\times C+n\times \log_2n$，使用大 O 标记法表示时间复杂度为 $O(nlogn)$。</p>
+<p>根据上面的分析归并排序不会受到数据有序度等的影响，所以归并排序的最好、最坏和平均时间复杂度都是 $O(nlogn)$。</p>
+<h5 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h5><p>归并排序的递归方法中，只有 merge 函数申请了一个额外的存储空间作为临时数组，但不需要将每个递归的子问题的临时数组的额外空间都进行累积计算，因为临时数组的存储空间在使用完成后就会被释放，所以归并排序的空间复杂度是 $O(n)$，也就是说归并排序并不是原地算法。</p>
+<h5 id="稳定性"><a href="#稳定性" class="headerlink" title="稳定性"></a>稳定性</h5><p>归并排序拆分数组操作并不会导致相同数据的前后顺序发生改变，在合并子数组的操作中控制小于等于的数合并在前，也不会改变相同数据的前后顺序，所以归并排序是稳定的排序算法。</p>
+<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><h4 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h4><p>快速排序（以下简称「<strong>快排</strong>」）也是根据分治的思想而来，与归并排序相似，快排也会进行数组的拆分，但不同的是快排不会进行合并操作。快排的排序操作发生在分区，也就是子数组拆分的时候，快排进行分区时会选择数组中的一个元素作为「分区点」（ pivot ），接着遍历数组中元素并把元素与分区点进行比较，比分区点小的数据放置在分区点的左端，比分区点大的数据放置在分区点的右端，子数组的拆分就以分区点的位置为中间点进行拆分，子数组再进行同样的操作直到子数组元素只有 1 个时终止。</p>
+<h4 id="实现逻辑解析-1"><a href="#实现逻辑解析-1" class="headerlink" title="实现逻辑解析"></a>实现逻辑解析</h4><p>根据快排的原理，快排与归并排序类似，也是属于递归的方式实现，同样可以先分析快排的递推公式和终止条件。</p>
+<blockquote>
+<p>递推公式 $quick_sort(p,r)=partition(p,r)+quick_sort(p,q-1)+quick_sort(q+1,r)$<br>终止条件 $p\geq r$</p>
+</blockquote>
+<p>递推公式中的 q 表示分区点的下标位置。</p>
+<h4 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(<span class="keyword">int</span>[] array, <span class="keyword">int</span> head, <span class="keyword">int</span> tail)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(head &gt;= tail) &#123;<span class="keyword">return</span>;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> pivot = partition(array, head, tail);</span><br><span class="line">  quickSort(array, head, pivot - <span class="number">1</span>);</span><br><span class="line">  quickSort(array, pivot + <span class="number">1</span>, tail);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="partition-函数的实现"><a href="#partition-函数的实现" class="headerlink" title="partition 函数的实现"></a>partition 函数的实现</h5><p>上一节的代码实现中可以看出，partition 函数的实现是快排的实现重点。根据快排的原理介绍，最先想到的实现方法是先确定分区点（一般会选择当前排序数组的最后一个元素），再申请两个临时数组将比分区点大的数据放入一个数组，比分区点小的数据放入另一个数组，最后再将两个数组和分区点合并成一个数组。</p>
+<p>虽然这样可以实现 partition 函数的功能，但因为会额外申请两个临时数组，会造成空间复杂度的增加，其实分区函数可以使用巧妙的方法实现，将空间复杂度降低到 $O(1)$。</p>
+<p>partition 函数的实现方法与选择排序的方式类似，会使用两个指针 i 和 j 同时指向数组的头元素，以 i 指向数组位置之前为比分区点小的区域，j 作为遍历数组的指针，当遍历到的数据比分区点小时与 i 指向的元素交换，并且 i 的位置向后移动一位，当循环遍历结束后将分区点元素与 i 指向的元素交换。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="keyword">int</span>[] array, <span class="keyword">int</span> head, <span class="keyword">int</span> tail)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= tail; j++) &#123;</span><br><span class="line">    <span class="keyword">if</span>(array[j] &lt;= array[tail]) &#123;</span><br><span class="line">      <span class="keyword">int</span> temp = array[i];</span><br><span class="line">      array[i] = array[j];</span><br><span class="line">      array[j] = temp;</span><br><span class="line">      i++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> i - <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="执行效率分析-1"><a href="#执行效率分析-1" class="headerlink" title="执行效率分析"></a>执行效率分析</h4><h5 id="时间复杂度-1"><a href="#时间复杂度-1" class="headerlink" title="时间复杂度"></a>时间复杂度</h5><p>快排的时间复杂度会受到数据有序程度和分区点选择的影响，我们先假设分区点每次都能将数组均分，这种情况下快排的时间复杂度分析与归并排序的分析相似，快排的分区函数时间复杂度也为 $O(n)$，所以这种情况下快排的时间复杂度为 $O(nlogn)$。</p>
+<p>分区点每次都能将数组分成两个平均的子数组这种情况比较理想，属于快排分区的最好情况，所以 $O(nlogn)$ 是快排的最好时间复杂度。</p>
+<p>如果在数据完全有序的情况下，每次分区点都选择最后一个，需要进行 n 次排序，每次排序的时间复杂度为 $O(n)$，所以这种情况下快排的时间复杂度会退化为 $O(n^2)$，这种分区极不平衡的情况下时间复杂度是快排的最坏时间复杂度。</p>
+<p>那快排的平均时间复杂度是多少？这里通过递推公式进行计算会比较复杂，在大多数情况下快排的时间复杂度都可以做到 $O(nlogn)$，只有极少数情况会退化为 $O(n^2)$，而且也有方法将这种情况发生的概率降到很低，在以后的章节中会讲解。</p>
+<h5 id="空间复杂度-1"><a href="#空间复杂度-1" class="headerlink" title="空间复杂度"></a>空间复杂度</h5><p>快排没有申请额外的存储空间，所以空间复杂度是 $O(1)$，也就是说快排是原地算法。</p>
+<h5 id="稳定性-1"><a href="#稳定性-1" class="headerlink" title="稳定性"></a>稳定性</h5><p>快排的分区函数会交换元素的位置，例如 $6,4,6,1,3$ 这组数据在第一次分区交换时就会导致两个 6 的前后顺序发生变化，所以快排是一种不稳定的排序算法。</p>
+<h3 id="两种排序的比对"><a href="#两种排序的比对" class="headerlink" title="两种排序的比对"></a>两种排序的比对</h3><p>两种算法虽然都是根据分治思想，利用递归方法实现的，但是归并排序是先将问题分解为子问题，最后再将子问题归并及排序，这是种由下至上的解决思路，快排先进行了分区排序再将问题分解为子问题进行类似的解决，这是由上至下的解决思路。</p>
+<p>归并算法虽然与快排的时间复杂度一样，都是 $O(nlogn)$，并且也稳定，但就是由于不是原地算法，空间复杂度较高这个致命缺点，导致在使用没有快排广泛。</p>
+<hr>
+<blockquote>
+<p><strong>文章中如有问题欢迎留言指正<br>本章节代码已经上传GitHub，可<a href="https://github.com/CloneableX/data_structures_algorithm/tree/master/sort/src" target="_blank" rel="noopener">点击跳转</a>查看代码详情。<br>数据结构与算法之美笔记系列将会做为我对王争老师此专栏的学习笔记，如想了解更多王争老师专栏的详情请到极客时间自行搜索。</strong></p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Cloneable</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://www.cloneable.cn/2019/05/25/data_structure_algorithm/数据结构与算法之美笔记——排序（下）/" title="数据结构与算法之美笔记——排序（下）">https://www.cloneable.cn/2019/05/25/data_structure_algorithm/数据结构与算法之美笔记——排序（下）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构与算法之美笔记/" rel="tag"># 数据结构与算法之美笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/14/test-my-site/" rel="next" title="test_my_site">
+                <i class="fa fa-chevron-left"></i> test_my_site
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/26/leetcode/leetcode题号155_最小栈/" rel="prev" title="leetcode 题号155 最小栈">
+                leetcode 题号155 最小栈 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Cloneable">
+            
+              <p class="site-author-name" itemprop="name">Cloneable</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/CloneableX" title="GitHub &rarr; https://github.com/CloneableX" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:cloneable@163.com" title="E-Mail &rarr; mailto:cloneable@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#归并排序"><span class="nav-number">1.</span> <span class="nav-text">归并排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原理"><span class="nav-number">1.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现逻辑解析"><span class="nav-number">1.2.</span> <span class="nav-text">实现逻辑解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-number">1.3.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#递归代码的实现"><span class="nav-number">1.3.1.</span> <span class="nav-text">递归代码的实现</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#merge-函数的实现"><span class="nav-number">1.3.2.</span> <span class="nav-text">merge 函数的实现</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#简化-merge-函数"><span class="nav-number">1.3.3.</span> <span class="nav-text">简化 merge 函数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行效率分析"><span class="nav-number">1.4.</span> <span class="nav-text">执行效率分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#时间复杂度"><span class="nav-number">1.4.1.</span> <span class="nav-text">时间复杂度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#空间复杂度"><span class="nav-number">1.4.2.</span> <span class="nav-text">空间复杂度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#稳定性"><span class="nav-number">1.4.3.</span> <span class="nav-text">稳定性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序"><span class="nav-number">2.</span> <span class="nav-text">快速排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原理-1"><span class="nav-number">2.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现逻辑解析-1"><span class="nav-number">2.2.</span> <span class="nav-text">实现逻辑解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现-1"><span class="nav-number">2.3.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#partition-函数的实现"><span class="nav-number">2.3.1.</span> <span class="nav-text">partition 函数的实现</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行效率分析-1"><span class="nav-number">2.4.</span> <span class="nav-text">执行效率分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#时间复杂度-1"><span class="nav-number">2.4.1.</span> <span class="nav-text">时间复杂度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#空间复杂度-1"><span class="nav-number">2.4.2.</span> <span class="nav-text">空间复杂度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#稳定性-1"><span class="nav-number">2.4.3.</span> <span class="nav-text">稳定性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两种排序的比对"><span class="nav-number">3.</span> <span class="nav-text">两种排序的比对</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cloneable</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">20k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">17 分钟</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: true,
+    notify: true,
+    appId: 'TULr9A5fv5VOx3ppDDwR1TlB-gzGzoHsz',
+    appKey: 'E4lnqMEAhDJJ5JA2wVLr0Rsr',
+    placeholder: '用你的评论来撩拨我哟！😉',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: 'zh-CN' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      const selection = document.getSelection();
+      const selected = selection.rangeCount > 0 ? selection.getRangeAt(0) : false;
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+      if (selected) {
+        selection.removeAllRanges();
+        selection.addRange(selected);
+      }
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+
+  
+
+</body>
+</html>
