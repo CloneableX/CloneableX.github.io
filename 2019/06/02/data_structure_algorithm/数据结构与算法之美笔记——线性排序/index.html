@@ -81,11 +81,11 @@
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
+      applicationID: 'EGCMUT6W5J',
+      apiKey: '29739acf21d37cac5c1dc285cd301f7f',
+      indexName: 'clo_blo',
       hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"查询不到结果: ${query}","hits_stats":"找到约 ${hits} 结果，用时 ${time} ms"}
     }
   };
 </script>
@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="Cloneable的小站">
 <meta property="og:description" content="摘要:  本章主要介绍三种线性排序，分别是「桶排序」「计数排序」「基数排序」，时间复杂度都为 $O(n)$，但是只适合于某些特殊场景下的数据排序。  本章主要会介绍三种「线性排序」算法，为何会称为线性排序？因为这三种排序算法的时间复杂度都是 $O(n)$，时间复杂度是呈线性增长，所以称为线性排序。 桶算法（ Bucket Sort ）原理桶算法的原理是将原数据的数据范围拆分为多个范围，这些小范围的">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-08T03:40:02.795Z">
+<meta property="og:updated_time" content="2019-06-08T08:26:45.464Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构与算法之美笔记——线性排序">
 <meta name="twitter:description" content="摘要:  本章主要介绍三种线性排序，分别是「桶排序」「计数排序」「基数排序」，时间复杂度都为 $O(n)$，但是只适合于某些特殊场景下的数据排序。  本章主要会介绍三种「线性排序」算法，为何会称为线性排序？因为这三种排序算法的时间复杂度都是 $O(n)$，时间复杂度是呈线性增长，所以称为线性排序。 桶算法（ Bucket Sort ）原理桶算法的原理是将原数据的数据范围拆分为多个范围，这些小范围的">
@@ -278,11 +278,46 @@
 
       
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
     </ul>
   
 
   
 
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
   
 </nav>
 
@@ -384,7 +419,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-08 11:40:02" itemprop="dateModified" datetime="2019-06-08T11:40:02+08:00">2019-06-08</time>
+                <time title="修改时间：2019-06-08 16:26:45" itemprop="dateModified" datetime="2019-06-08T16:26:45+08:00">2019-06-08</time>
               
             
           </span>
@@ -484,7 +519,7 @@
 <p>本章主要会介绍三种「<strong>线性排序</strong>」算法，为何会称为线性排序？因为这三种排序算法的时间复杂度都是 $O(n)$，时间复杂度是呈线性增长，所以称为线性排序。</p>
 <h3 id="桶算法（-Bucket-Sort-）"><a href="#桶算法（-Bucket-Sort-）" class="headerlink" title="桶算法（ Bucket Sort ）"></a>桶算法（ Bucket Sort ）</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>桶算法的原理是将原数据的数据范围拆分为多个范围，这些小范围的空间就像桶一样，原数据根据所在范围被分配进相应的桶中，在桶内对数据采用 $O(nlogn)$ 的排序算法进行排序。因为桶与桶之间是自然大小排序的，桶内数据排序完成后按照桶顺序输出，输出的结果就是已经排序好的数组。</p>
 <h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> bucketAmount = <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span>[] array, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(array == <span class="keyword">null</span> || array.length &lt; <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span>[] range = getRange(array);</span><br><span class="line">  <span class="keyword">int</span> min = range[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">int</span> bucketSize = (range[<span class="number">1</span>] - min + <span class="number">1</span>) / bucketAmount;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span>[][] bucketArray = <span class="keyword">new</span> <span class="keyword">int</span>[bucketAmount][array.length];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// initialize end index of every bucket array</span></span><br><span class="line">  <span class="keyword">int</span>[] bucketCount = <span class="keyword">new</span> <span class="keyword">int</span>[bucketAmount];</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bucketCount.length; i++) &#123;</span><br><span class="line">    bucketCount[i] = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;</span><br><span class="line">    <span class="keyword">int</span> bucketIndex = (array[i] - min) / bucketAmount;</span><br><span class="line">    bucketArray[bucketIndex][bucketCount[bucketIndex]++] = array[i];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  QuickSort quickSort = <span class="keyword">new</span> QuickSort();</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bucketAmount; i++) &#123;</span><br><span class="line">    quickSort.sort(bucketArray[i], bucketArray[i].length);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> arrayCount = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bucketAmount; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; bucketCount[i]; j++) &#123;</span><br><span class="line">      array[arrayCount++] = bucketArray[i][j];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * get range of array, index 0 of return array is min,</span></span><br><span class="line"><span class="comment"> * index 1 of return array is max</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> array</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span>[] getRange(<span class="keyword">int</span>[] array) &#123;</span><br><span class="line">  <span class="keyword">int</span> min = Integer.MAX_VALUE;</span><br><span class="line">  <span class="keyword">int</span> max = Integer.MIN_VALUE;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;</span><br><span class="line">    min = Math.min(array[i], min);</span><br><span class="line">    max = Math.max(array[i], max);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[] &#123;min, max&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h4><p>假设数据规模为 $n$，根据数据范围拆分为 $m$ 个桶，数据能够被平均分配到桶中，每个桶可以分配到 $k$ 个数据，$k$ 满足关系 $k=\frac{n}{m}$，每个桶内的排序采用 $O(nlogn)$ 的排序算法，所以每个桶内排序时间复杂度为 $O(k<em>logk)$，整个桶排序算法的时间复杂度为 $O(m</em>k*logk)$，将 $k$ 的关系式代入结果为<script type="math/tex">O\left(m\times\frac{n}{m}\times\log\left(\frac{n}{m}\right))=O(n\times\log\left(\frac{n}{m}\right)\right)</script>，当桶个数 $m$ 趋近于数据规模 $n$ 时 $log\frac{n}{m}$ 会成为一个较小的常量，所以桶排序的时间复杂度为 $$O\left(n\right)$。</p>
+<h4 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h4><p>假设数据规模为 $n$，根据数据范围拆分为 $m$ 个桶，数据能够被平均分配到桶中，每个桶可以分配到 $k$ 个数据，$k$ 满足关系 $k=\frac{n}{m}$，每个桶内的排序采用 $O(nlogn)$ 的排序算法，所以每个桶内排序时间复杂度为 $O(k*logk)$，整个桶排序算法的时间复杂度为 $O(m\times k\times\log\left(k\right))$，将 $k$ 的关系式代入结果为 $O(m\times\frac{n}{m}\times\log\left(\frac{n}{m})\right)=O(n\times\log\left(\frac{n}{m})\right)$，当桶个数 $m$ 趋近于数据规模 $n$ 时 $log\frac{n}{m}$ 会成为一个较小的常量，所以桶排序的时间复杂度为 $O(n)$。</p>
 <p>虽然桶排序的时间复杂度为 $O(n)$，但这是基于我们进行了许多理想化的假设基础上。首先数据要容易划分为 $m$ 个桶，桶之间有天然的大小顺序，数据分配到桶要平均，所以桶排序对数据的要求比较苛刻。事实上数据很难平均分配到桶内，当桶内数据出现多少之别时桶内的排序时间复杂度也就不是常量级的了，甚至在极端情况下，数据都被分配到一个桶中，这个时候桶排序的时间复杂度就会退化为 $O(nlogn)$。</p>
 <h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><p>桶排序适合使用在「<strong>外部排序</strong>」的场景中，外部排序就是指外部磁盘数据量大，而内存有限相对较小，无法将数据一次性读入内存中的情况。</p>
 <p>例如，有日志数据 10G 大小，内存 200M，需要将日志数据排序，这种情况就适合使用桶排序。可以先扫描日志数据的数据范围，按日志时间拆分为多个连续范围，例如 20190601，20190602……，以此类推，并将相应范围的文件按先后顺序编号，再将日志数据分配到相应范围的文件内，对文件内数据进行快排，再按文件顺序读入输出到同一文件中。</p>
@@ -655,7 +690,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -971,16 +1006,16 @@
   });
   new Valine({
     el: '#comments',
-    verify: true,
-    notify: true,
-    appId: 'TULr9A5fv5VOx3ppDDwR1TlB-gzGzoHsz',
-    appKey: 'E4lnqMEAhDJJ5JA2wVLr0Rsr',
+    verify: false,
+    notify: false,
+    appId: 'uf12PDmrUOMN7OhqQCS0OF7l-gzGzoHsz',
+    appKey: 'MX31bCoCIzO71iuoj69S52dt',
     placeholder: '用你的评论来撩拨我哟！😉',
     avatar: 'mm',
     meta: guest,
     pageSize: '10' || 10,
     visitor: false,
-    lang: 'zh-CN' || 'zh-cn'
+    lang: 'zh-cn' || 'zh-cn'
   });
 </script>
 
@@ -992,6 +1027,19 @@
 
   
 
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/algolia-search.js?v=7.1.2"></script>
 
 
 
