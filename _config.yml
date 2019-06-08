@@ -8,12 +8,12 @@ subtitle:
 description:
 keywords:
 author: Cloneable
-language:
+language: zh-CN
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://www.cloneable.cn
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -73,7 +73,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: Fan
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -81,3 +81,17 @@ deploy:
   type: git
   repo: https://github.com/CloneableX/CloneableX.github.io.git
   branch: master
+
+# Post wordcount display settings
+symbols_count_time:
+  symbols: true
+  time: true
+  total_symbols: true
+  total_time: true
+
+# TODO: HIDE KEY DATA WHEN PUSH TO GITHUB
+algolia:
+  applicationID: '******'
+  apiKey: '******'
+  indexName: 'clo_blo'
+  chunkSize: 5000
