@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="查看题目详情可点击此处。 题目设计一个支持 push，pop，top 操作，并能在常数时间内检索到最小元素的栈。  push(x) — 将元素 x 推入栈中。 pop() — 删除栈顶的元素。 top() — 获取栈顶元素。 getMin() — 检索栈中的最小元素。  示例:  MinStack minStack = new MinStack();minStack.push(-2);minSta">
+  <meta name="description" content="查看题目详情可点击此处。 题目使用队列实现栈的下列操作：  push(x) — 元素 x 入栈 pop() — 移除栈顶元素 top() — 获取栈顶元素 empty() — 返回栈是否为空  注意: 你只能使用队列的基本操作— 也就是 push to back, peek/pop from front, size, 和 is empty 这些操作是合法的。你所使用的语言也许不支持队列。 你可以使">
 <meta name="keywords" content="leetcode,栈">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetcode 题号155 最小栈">
-<meta property="og:url" content="https://www.cloneable.cn/2019/05/26/leetcode/leetcode题号155_最小栈/index.html">
+<meta property="og:title" content="leetcode 题号255 用队列实现栈">
+<meta property="og:url" content="https://www.cloneable.cn/2019/06/02/leetcode/stack/easy/leetcode题号255_用队列实现栈/index.html">
 <meta property="og:site_name" content="Cloneable的小站">
-<meta property="og:description" content="查看题目详情可点击此处。 题目设计一个支持 push，pop，top 操作，并能在常数时间内检索到最小元素的栈。  push(x) — 将元素 x 推入栈中。 pop() — 删除栈顶的元素。 top() — 获取栈顶元素。 getMin() — 检索栈中的最小元素。  示例:  MinStack minStack = new MinStack();minStack.push(-2);minSta">
+<meta property="og:description" content="查看题目详情可点击此处。 题目使用队列实现栈的下列操作：  push(x) — 元素 x 入栈 pop() — 移除栈顶元素 top() — 获取栈顶元素 empty() — 返回栈是否为空  注意: 你只能使用队列的基本操作— 也就是 push to back, peek/pop from front, size, 和 is empty 这些操作是合法的。你所使用的语言也许不支持队列。 你可以使">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-08T07:06:08.125Z">
+<meta property="og:updated_time" content="2019-06-09T07:40:06.062Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="leetcode 题号155 最小栈">
-<meta name="twitter:description" content="查看题目详情可点击此处。 题目设计一个支持 push，pop，top 操作，并能在常数时间内检索到最小元素的栈。  push(x) — 将元素 x 推入栈中。 pop() — 删除栈顶的元素。 top() — 获取栈顶元素。 getMin() — 检索栈中的最小元素。  示例:  MinStack minStack = new MinStack();minStack.push(-2);minSta">
+<meta name="twitter:title" content="leetcode 题号255 用队列实现栈">
+<meta name="twitter:description" content="查看题目详情可点击此处。 题目使用队列实现栈的下列操作：  push(x) — 元素 x 入栈 pop() — 移除栈顶元素 top() — 获取栈顶元素 empty() — 返回栈是否为空  注意: 你只能使用队列的基本操作— 也就是 push to back, peek/pop from front, size, 和 is empty 这些操作是合法的。你所使用的语言也许不支持队列。 你可以使">
 
 
 
@@ -115,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="https://www.cloneable.cn/2019/05/26/leetcode/leetcode题号155_最小栈/">
+  <link rel="canonical" href="https://www.cloneable.cn/2019/06/02/leetcode/stack/easy/leetcode题号255_用队列实现栈/">
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>leetcode 题号155 最小栈 | Cloneable的小站</title>
+  <title>leetcode 题号255 用队列实现栈 | Cloneable的小站</title>
   
 
 
@@ -359,7 +359,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.cloneable.cn/2019/05/26/leetcode/leetcode题号155_最小栈/">
+    <link itemprop="mainEntityOfPage" href="https://www.cloneable.cn/2019/06/02/leetcode/stack/easy/leetcode题号255_用队列实现栈/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cloneable">
@@ -376,7 +376,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">leetcode 题号155 最小栈
+          <h1 class="post-title" itemprop="name headline">leetcode 题号255 用队列实现栈
 
               
             
@@ -402,7 +402,7 @@
                 
               
 
-              <time title="创建时间：2019-05-26 09:03:38" itemprop="dateCreated datePublished" datetime="2019-05-26T09:03:38+08:00">2019-05-26</time>
+              <time title="创建时间：2019-06-02 19:55:58" itemprop="dateCreated datePublished" datetime="2019-06-02T19:55:58+08:00">2019-06-02</time>
             
 
             
@@ -419,7 +419,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-08 15:06:08" itemprop="dateModified" datetime="2019-06-08T15:06:08+08:00">2019-06-08</time>
+                <time title="修改时间：2019-06-09 15:40:06" itemprop="dateModified" datetime="2019-06-09T15:40:06+08:00">2019-06-09</time>
               
             
           </span>
@@ -455,8 +455,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/05/26/leetcode/leetcode题号155_最小栈/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/26/leetcode/leetcode题号155_最小栈/" itemprop="commentCount"></span>
+                <a href="/2019/06/02/leetcode/stack/easy/leetcode题号255_用队列实现栈/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/06/02/leetcode/stack/easy/leetcode题号255_用队列实现栈/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -478,7 +478,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.5k</span>
+                <span title="本文字数">2.1k</span>
               
 
               
@@ -492,7 +492,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">2 分钟</span>
               
             </div>
           
@@ -512,22 +512,20 @@
       
 
       
-        <p>查看题目详情可<a href="https://leetcode-cn.com/problems/min-stack/" target="_blank" rel="noopener">点击此处</a>。</p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>设计一个支持 push，pop，top 操作，并能在常数时间内检索到最小元素的栈。</p>
+        <p>查看题目详情可<a href="https://leetcode-cn.com/problems/implement-stack-using-queues/submissions/" target="_blank" rel="noopener">点击此处</a>。</p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>使用队列实现栈的下列操作：</p>
 <ul>
-<li>push(x) — 将元素 x 推入栈中。</li>
-<li>pop() — 删除栈顶的元素。</li>
-<li>top() — 获取栈顶元素。</li>
-<li>getMin() — 检索栈中的最小元素。</li>
+<li>push(x) — 元素 x 入栈</li>
+<li>pop() — 移除栈顶元素</li>
+<li>top() — 获取栈顶元素</li>
+<li>empty() — 返回栈是否为空</li>
 </ul>
-<p>示例:</p>
-<blockquote>
-<p>MinStack minStack = new MinStack();<br>minStack.push(-2);<br>minStack.push(0);<br>minStack.push(-3);<br>minStack.getMin();   —&gt; 返回 -3.<br>minStack.pop();<br>minStack.top();      —&gt; 返回 0.<br>minStack.getMin();   —&gt; 返回 -2.</p>
-</blockquote>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>需要实现的栈操作中，其他操作属于常规的栈操作，没有特别之处，解题的重点在于如何实现常数时间类检索到最小值，实现此操作需要额外的存储空间对最小值进行存储，最初肯定会考虑到用一个 int 变量存储最小值，每次 push 操作的时候比较元素替换最小值，检索最小值的时候将此 int 变量返回即可。</p>
-<p>这样的方法初看没有问题，但当进出栈操作时，如果栈顶元素就是当前的最小值，出栈后就需要在栈内元素中再搜索一遍最小值并保存起来，无疑会增加出栈操作的时间复杂度。</p>
-<p>利用空间换时间的思想，可以创建另一个栈，当数据入栈时会存入数据栈，同时也会把此元素对应的最小值存储在最小值栈中，类似备忘录模式，记录下每个元素的最小值状态。</p>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MinStack</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** initialize your data structure here. */</span></span><br><span class="line">    <span class="keyword">private</span> Stack&lt;Integer&gt; intStack;</span><br><span class="line">    <span class="keyword">private</span> Stack&lt;Integer&gt; minStack;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> min;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MinStack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        intStack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        minStack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        min = Integer.MIN_VALUE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        intStack.push(x);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(minStack.empty()) &#123;</span><br><span class="line">            minStack.push(x);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            min = Math.min(minStack.peek(), x);</span><br><span class="line">            minStack.push(min);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        intStack.pop();</span><br><span class="line">        minStack.pop();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">top</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> intStack.peek();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMin</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> minStack.peek();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意:</strong></p>
+<p>你只能使用队列的基本操作— 也就是 <code>push to back</code>, <code>peek/pop from front</code>, <code>size</code>, 和 <code>is empty</code> 这些操作是合法的。<br>你所使用的语言也许不支持队列。 你可以使用 list 或者 deque（双端队列）来模拟一个队列 , 只要是标准的队列操作即可。<br>你可以假设所有操作都是有效的（例如, 对一个空的栈不会调用 pop 或者 top 操作）。</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>首先应该明确栈和队列两种数据结构的不同特点，栈是先进后出，队列是先进先出，如果要用队列实现栈，需要使队列的队首元素保持为栈顶元素，并且队列中元素的出队顺序要保持与栈中一致。</p>
+<p>我的解题思路是使用两个队列实现，一个队列（以下称为「<strong>栈顶队列</strong>」）为存储栈顶数据，一个队列（以下称为「<strong>非栈顶队列</strong>」）保存非栈顶数据但出队顺序与出栈顺序保持一致。当数据入栈时判断栈顶队列是否为空，为空时数据入队；否则判断非栈顶队列是否为空，为空时将数据入队非栈顶队列，然后将非栈顶队列与栈顶队列交换；如果两个队列都不为空，将非栈顶队列数据按顺序入队至栈顶队列，并清空非栈顶队列，将入栈数据入队至非栈顶队列，最后将两个队列交换。</p>
+<p>需要注意的是出栈操作上，当栈顶队列进行出栈操作前，需要将非栈顶队列的队首元素出队并入队至栈顶队列，否则出栈操作之后栈顶队列就会空。</p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.concurrent.LinkedBlockingQueue;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyStack</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Queue&lt;Integer&gt; tempQueue;</span><br><span class="line">    <span class="keyword">private</span> Queue&lt;Integer&gt; notTopStackQueue;</span><br><span class="line">    <span class="keyword">private</span> Queue&lt;Integer&gt; stackQueue;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyStack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        notTopStackQueue = <span class="keyword">new</span> LinkedBlockingQueue&lt;&gt;();</span><br><span class="line">        stackQueue = <span class="keyword">new</span> LinkedBlockingQueue&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(stackQueue.isEmpty()) &#123;</span><br><span class="line">            stackQueue.add(x);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span>(notTopStackQueue.isEmpty()) &#123;</span><br><span class="line">            notTopStackQueue.addAll(stackQueue);</span><br><span class="line">            stackQueue.clear();</span><br><span class="line">            stackQueue.add(x);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            stackQueue.addAll(notTopStackQueue);</span><br><span class="line">            notTopStackQueue.clear();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// swap stackQueue with notTopStackQueue</span></span><br><span class="line">            tempQueue = stackQueue;</span><br><span class="line">            stackQueue = notTopStackQueue;</span><br><span class="line">            notTopStackQueue = tempQueue;</span><br><span class="line"></span><br><span class="line">            stackQueue.add(x);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Removes the element on top of the stack and returns that element. */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!notTopStackQueue.isEmpty()) &#123;</span><br><span class="line">            stackQueue.add(notTopStackQueue.poll());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> stackQueue.poll();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Get the top element. */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">top</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stackQueue.peek();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Returns whether the stack is empty. */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">empty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stackQueue.isEmpty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -561,7 +559,7 @@
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
     
-    <a href="https://www.cloneable.cn/2019/05/26/leetcode/leetcode题号155_最小栈/" title="leetcode 题号155 最小栈">https://www.cloneable.cn/2019/05/26/leetcode/leetcode题号155_最小栈/</a>
+    <a href="https://www.cloneable.cn/2019/06/02/leetcode/stack/easy/leetcode题号255_用队列实现栈/" title="leetcode 题号255 用队列实现栈">https://www.cloneable.cn/2019/06/02/leetcode/stack/easy/leetcode题号255_用队列实现栈/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -592,8 +590,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/25/data_structure_algorithm/数据结构与算法之美笔记——排序（下）/" rel="next" title="数据结构与算法之美笔记——排序（下）">
-                <i class="fa fa-chevron-left"></i> 数据结构与算法之美笔记——排序（下）
+              <a href="/2019/06/02/tip/mockito/Mockito初探（三）——特别的Mock/" rel="next" title="Mockito初探（三）——特别的Mock">
+                <i class="fa fa-chevron-left"></i> Mockito初探（三）——特别的Mock
               </a>
             
           </div>
@@ -602,8 +600,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/26/tip/mockito/Mockito初探（二）——常用功能/" rel="prev" title="Mockito初探（二）——常用功能">
-                Mockito初探（二）——常用功能 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/06/09/data_structure_algorithm/数据结构与算法之美笔记——排序优化/" rel="prev" title="数据结构与算法之美笔记——排序优化">
+                数据结构与算法之美笔记——排序优化 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -679,7 +677,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -704,7 +702,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -729,7 +729,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -843,7 +847,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">20k</span>
+    <span title="站点总字数">28k</span>
   
 
   
@@ -852,7 +856,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">17 分钟</span>
+    <span title="站点阅读时长">23 分钟</span>
   
 </div>
 
@@ -999,7 +1003,7 @@
     notify: false,
     appId: 'uf12PDmrUOMN7OhqQCS0OF7l-gzGzoHsz',
     appKey: 'MX31bCoCIzO71iuoj69S52dt',
-    placeholder: '用你的评论来撩拨我哟！😉',
+    placeholder: '用你的评论来撩我哟！😉',
     avatar: 'mm',
     meta: guest,
     pageSize: '10' || 10,
