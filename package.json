@@ -22,5 +22,10 @@
     "hexo-renderer-stylus": "^0.3.3",
     "hexo-server": "^0.3.3",
     "hexo-symbols-count-time": "^0.6.0"
+  },
+  "scripts": {
+    "start": "hexo s",
+    "build": "hexo clean && hexo g",
+    "deploy": "set HEXO_ALGOLIA_INDEXING_KEY=[Your Algolia apikey] && hexo algolia && hexo clean && hexo g && hexo d"
   }
 }
