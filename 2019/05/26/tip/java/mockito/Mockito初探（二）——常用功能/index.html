@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="Mockito 除了常用的 stub 和 verify 功能外，还可以完成一些特别的 stub 操作以及使用 spy 进行特别的 mock。 Stub 返回不同值12345678910111213141516@Mockprivate List mockedList;@Beforepublic void before() &amp;#123;    MockitoAnnotations.initMocks(">
+  <meta name="description" content="通过前一章 《 Mockito初探（一）—— 初识 》 的学习，我们对 Mockito 的一些基本知识有了初步了解，这章我们继续对 Mockito 的一些基本使用进行讲解。 @Mock 注解的使用我们可以使用 @Mock 注解 mock 指定的对象，但需要注意的是在测试类中的 before 方法中加上 MockitoAnnotations.initMocks(testClass);。 123456">
 <meta name="keywords" content="mockito">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mockito初探（三）——特别的Mock">
-<meta property="og:url" content="https://www.cloneable.cn/2019/06/02/tip/mockito/Mockito初探（三）——特别的Mock/index.html">
+<meta property="og:title" content="Mockito初探（二）——常用功能">
+<meta property="og:url" content="https://www.cloneable.cn/2019/05/26/tip/java/mockito/Mockito初探（二）——常用功能/index.html">
 <meta property="og:site_name" content="Cloneable的小站">
-<meta property="og:description" content="Mockito 除了常用的 stub 和 verify 功能外，还可以完成一些特别的 stub 操作以及使用 spy 进行特别的 mock。 Stub 返回不同值12345678910111213141516@Mockprivate List mockedList;@Beforepublic void before() &amp;#123;    MockitoAnnotations.initMocks(">
+<meta property="og:description" content="通过前一章 《 Mockito初探（一）—— 初识 》 的学习，我们对 Mockito 的一些基本知识有了初步了解，这章我们继续对 Mockito 的一些基本使用进行讲解。 @Mock 注解的使用我们可以使用 @Mock 注解 mock 指定的对象，但需要注意的是在测试类中的 before 方法中加上 MockitoAnnotations.initMocks(testClass);。 123456">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-08T07:01:01.308Z">
+<meta property="og:updated_time" content="2019-06-22T03:29:05.135Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mockito初探（三）——特别的Mock">
-<meta name="twitter:description" content="Mockito 除了常用的 stub 和 verify 功能外，还可以完成一些特别的 stub 操作以及使用 spy 进行特别的 mock。 Stub 返回不同值12345678910111213141516@Mockprivate List mockedList;@Beforepublic void before() &amp;#123;    MockitoAnnotations.initMocks(">
+<meta name="twitter:title" content="Mockito初探（二）——常用功能">
+<meta name="twitter:description" content="通过前一章 《 Mockito初探（一）—— 初识 》 的学习，我们对 Mockito 的一些基本知识有了初步了解，这章我们继续对 Mockito 的一些基本使用进行讲解。 @Mock 注解的使用我们可以使用 @Mock 注解 mock 指定的对象，但需要注意的是在测试类中的 before 方法中加上 MockitoAnnotations.initMocks(testClass);。 123456">
 
 
 
@@ -115,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="https://www.cloneable.cn/2019/06/02/tip/mockito/Mockito初探（三）——特别的Mock/">
+  <link rel="canonical" href="https://www.cloneable.cn/2019/05/26/tip/java/mockito/Mockito初探（二）——常用功能/">
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>Mockito初探（三）——特别的Mock | Cloneable的小站</title>
+  <title>Mockito初探（二）——常用功能 | Cloneable的小站</title>
   
 
 
@@ -359,7 +359,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.cloneable.cn/2019/06/02/tip/mockito/Mockito初探（三）——特别的Mock/">
+    <link itemprop="mainEntityOfPage" href="https://www.cloneable.cn/2019/05/26/tip/java/mockito/Mockito初探（二）——常用功能/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cloneable">
@@ -376,7 +376,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Mockito初探（三）——特别的Mock
+          <h1 class="post-title" itemprop="name headline">Mockito初探（二）——常用功能
 
               
             
@@ -402,7 +402,7 @@
                 
               
 
-              <time title="创建时间：2019-06-02 17:20:28" itemprop="dateCreated datePublished" datetime="2019-06-02T17:20:28+08:00">2019-06-02</time>
+              <time title="创建时间：2019-05-26 16:28:16" itemprop="dateCreated datePublished" datetime="2019-05-26T16:28:16+08:00">2019-05-26</time>
             
 
             
@@ -419,7 +419,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-08 15:01:01" itemprop="dateModified" datetime="2019-06-08T15:01:01+08:00">2019-06-08</time>
+                <time title="修改时间：2019-06-22 11:29:05" itemprop="dateModified" datetime="2019-06-22T11:29:05+08:00">2019-06-22</time>
               
             
           </span>
@@ -443,7 +443,14 @@
                   ，
                 
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/tip/mockito/" itemprop="url" rel="index"><span itemprop="name">mockito</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/tip/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/tip/java/mockito/" itemprop="url" rel="index"><span itemprop="name">mockito</span></a></span>
 
                 
                 
@@ -462,8 +469,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/06/02/tip/mockito/Mockito初探（三）——特别的Mock/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/06/02/tip/mockito/Mockito初探（三）——特别的Mock/" itemprop="commentCount"></span>
+                <a href="/2019/05/26/tip/java/mockito/Mockito初探（二）——常用功能/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/26/tip/java/mockito/Mockito初探（二）——常用功能/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -485,7 +492,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2.8k</span>
+                <span title="本文字数">2.1k</span>
               
 
               
@@ -519,21 +526,22 @@
       
 
       
-        <p>Mockito 除了常用的 stub 和 verify 功能外，还可以完成一些特别的 stub 操作以及使用 spy 进行特别的 mock。</p>
-<h3 id="Stub-返回不同值"><a href="#Stub-返回不同值" class="headerlink" title="Stub 返回不同值"></a>Stub 返回不同值</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Mock</span></span><br><span class="line"><span class="keyword">private</span> List mockedList;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Before</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    MockitoAnnotations.initMocks(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stubMultipleResult</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    when(mockedList.get(anyInt())).thenReturn(<span class="string">"first get"</span>).thenReturn(<span class="string">"more than once get"</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(mockedList.get(<span class="number">0</span>));</span><br><span class="line">    System.out.println(mockedList.get(<span class="number">0</span>));</span><br><span class="line">    System.out.println(mockedList.get(<span class="number">0</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可以通过上面的方式使第一次调用的时候返回第一个 thenReturn 的值，第二次调用返回第二个 thenReturn 的值，这种返回值方式只能顺序调用返回，当返回值进行到最后一个 thenReturn 时，无论再进行多少次调用都只会返回最后一个 thenReturn 的结果，当然也可以使用 <code>thenThrow</code>、 <code>thenAnswer</code> 等方法替换 thenReturn。当然，实现同样功能也有简洁写法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">when(mockedList.remove(anyInt())).thenReturn(<span class="string">"first remove"</span>, <span class="string">"twice remove"</span>, <span class="string">"more than twice remove"</span>);</span><br><span class="line"></span><br><span class="line">System.out.println(mockedList.remove(<span class="number">0</span>));</span><br><span class="line">System.out.println(mockedList.remove(<span class="number">0</span>));</span><br><span class="line">System.out.println(mockedList.remove(<span class="number">0</span>));</span><br><span class="line">System.out.println(mockedList.remove(<span class="number">0</span>));</span><br></pre></td></tr></table></figure>
-<p>将返回值依次作为 thenReturn 方法的参数传入也可以实现同样效果。</p>
-<p>需要注意的是，不能将两次 thenReturn 分开写，如果分开写，后面一个 thenReutrn 会覆盖前一个 thenReturn 的结果。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">when(mockedList.remove(anyInt())).thenReturn(<span class="string">"first remove"</span>);</span><br><span class="line">when(mockedList.remove(anyInt())).thenReturn(<span class="string">"twice remove"</span>);</span><br></pre></td></tr></table></figure>
-<h3 id="Stub-自定义返回"><a href="#Stub-自定义返回" class="headerlink" title="Stub 自定义返回"></a>Stub 自定义返回</h3><p>使用 stub 时可以返回一些简单的结果，如同之前提到的一些 stub 的例子，如果我们想要根据调用方法的参数等进行逻辑处理，再生成相应结果返回呢？这种情况可以使用 <code>thenAnswer</code> 方法，加上自定义实现 <code>Answer</code> 的 <code>answer</code> 方法解决。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stubCallback</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    when(mockedList.set(anyInt(), any())).thenAnswer(<span class="keyword">new</span> Answer&lt;Object&gt;() &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> Object <span class="title">answer</span><span class="params">(InvocationOnMock invocationOnMock)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">            Object[] args = invocationOnMock.getArguments();</span><br><span class="line">            Object mocked = invocationOnMock.getMock();</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"arguments are: "</span> + args;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    System.out.println(mockedList.set(<span class="number">1</span>, <span class="string">"Answer callback"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="亦真亦假的-Spy"><a href="#亦真亦假的-Spy" class="headerlink" title="亦真亦假的 Spy"></a>亦真亦假的 Spy</h3><p>通过 spy 方法也可以生成一个 mock 对象，不过 spy 与 mock 相比的特别之处在于，如果被调用的 spy 对象的方法没有 stub，会直接调用真实对象的相应方法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">spyObject</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ArrayList&lt;Integer&gt; arrayList = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">    ArrayList spyList = spy(arrayList);</span><br><span class="line"></span><br><span class="line">    doReturn(<span class="number">100</span>).when(spyList).size();</span><br><span class="line"></span><br><span class="line">    System.out.println(spyList.size());</span><br><span class="line"></span><br><span class="line">    spyList.add(<span class="number">0</span>);</span><br><span class="line">    spyList.add(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(spyList.size());</span><br><span class="line">    System.out.println(spyList.toString());</span><br><span class="line"></span><br><span class="line">    verify(spyList).add(<span class="number">0</span>);</span><br><span class="line">    verify(spyList).add(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当你只是需要 mock 部分方法，而又需要另外一些方法的真实调用时，使用 spy 再适宜不过。不过，需要注意的是，对 spy 对象进行 stub 时尽量使用 <code>doReturn.when(spyObj).someMethod()</code> 的方式，因为当使用 <code>when(spyObj.someMethod()).thenReturn()</code> 方式时 <code>someMethod</code> 相当于在 stub 之前被调用了一次，而 spy 对象调用未被 stub 的方法时，会直接调用原对象的相应方法，容易造成异常。</p>
-<p>如下的例子中，<code>spyList</code> 在没有元素的情况下调用  <code>get</code> 方法就会造成下标越界的异常。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ArrayList&lt;Integer&gt; arrayList = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">ArrayList spyList = spy(arrayList);</span><br><span class="line"></span><br><span class="line">when(spyList.get(<span class="number">0</span>)).thenReturn(<span class="string">"call get"</span>);</span><br></pre></td></tr></table></figure>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这章描述了多次调用 stub 方法返回不同结果和自定义 stub 方法响应逻辑，还有 spy 这种特别的 mock 方式以及使用这些功能时的一些注意事项。</p>
+        <p>通过前一章 《 Mockito初探（一）—— 初识 》 的学习，我们对 Mockito 的一些基本知识有了初步了解，这章我们继续对 Mockito 的一些基本使用进行讲解。</p>
+<h3 id="Mock-注解的使用"><a href="#Mock-注解的使用" class="headerlink" title="@Mock 注解的使用"></a>@Mock 注解的使用</h3><p>我们可以使用 @Mock 注解 mock 指定的对象，但需要注意的是<strong>在测试类中的 before 方法中加上 <code>MockitoAnnotations.initMocks(testClass);</code></strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Mock</span></span><br><span class="line"><span class="keyword">private</span> List mockedList;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Before</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    MockitoAnnotations.initMocks(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="参数匹配"><a href="#参数匹配" class="headerlink" title="参数匹配"></a>参数匹配</h3><p>对被 mock 的对象的某个方法进行 stub 时可以对方法的参数进行匹配，以返回期望的结果。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stubWithArgMatcher</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ArrayList mock = mock(ArrayList.class);</span><br><span class="line"></span><br><span class="line">    when(mock.get(anyInt())).thenReturn(<span class="string">"mock get method"</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(mock.get((<span class="keyword">int</span>)(Math.random() * <span class="number">10</span>)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Mockito 的参数匹配默认是调用对象的 <code>equals()</code> 方法，不过 Mockito 也提供以 any 开头的方法进行参数匹配，这种匹配方式更加灵活，可读性也更好。</p>
+<h3 id="Stub-无返回值方法"><a href="#Stub-无返回值方法" class="headerlink" title="Stub 无返回值方法"></a>Stub 无返回值方法</h3><p>对于无返回值的方法该如何 stub？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stubVoidMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    doNothing().when(mockedList).add(anyInt(), any());</span><br><span class="line">    doThrow(<span class="keyword">new</span> RuntimeException(<span class="string">"throw runtime exception"</span>)).when(mockedList).clear();</span><br><span class="line"></span><br><span class="line">    mockedList.add(<span class="number">0</span>, <span class="string">"123"</span>);</span><br><span class="line">    mockedList.clear();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>doNothing()</code> 方法可以 stub 无返回值的方法，Mockito 还提供了一系列的 do 开头的方法，都是类似使用，不过被 stub 的方法不再是写在 when 中，而是写在 when 外部。</p>
+<h3 id="verify-额外次数"><a href="#verify-额外次数" class="headerlink" title="verify 额外次数"></a>verify 额外次数</h3><p>verify 方法默认是验证相应方法被调用一次，不过 verify 方法也提供了验证多次或额外次数的方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">verifyExtraNum</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    mockedList.add(<span class="string">"once"</span>);</span><br><span class="line"></span><br><span class="line">    mockedList.add(<span class="string">"twice"</span>);</span><br><span class="line">    mockedList.add(<span class="string">"twice"</span>);</span><br><span class="line"></span><br><span class="line">    mockedList.add(<span class="string">"three times"</span>);</span><br><span class="line">    mockedList.add(<span class="string">"three times"</span>);</span><br><span class="line">    mockedList.add(<span class="string">"three times"</span>);</span><br><span class="line"></span><br><span class="line">    verify(mockedList).add(<span class="string">"once"</span>);</span><br><span class="line">    verify(mockedList, times(<span class="number">1</span>)).add(<span class="string">"once"</span>);</span><br><span class="line"></span><br><span class="line">    verify(mockedList, times(<span class="number">2</span>)).add(<span class="string">"twice"</span>);</span><br><span class="line">    verify(mockedList, times(<span class="number">3</span>)).add(<span class="string">"three times"</span>);</span><br><span class="line"></span><br><span class="line">    verify(mockedList, never()).add(<span class="string">"never happen"</span>);</span><br><span class="line"></span><br><span class="line">    verify(mockedList, atLeastOnce()).add(<span class="string">"three times"</span>);</span><br><span class="line">    verify(mockedList, atLeast(<span class="number">2</span>)).add(<span class="string">"three times"</span>);</span><br><span class="line">    verify(mockedList, atMost(<span class="number">2</span>)).add(<span class="string">"twice"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>verify 方法接受 VerificationMode 参数， 也就是不同的验证方式，times 方法返回验证不同次数的验证方式，例如 <code>times(1)</code> 就是验证相应方法被调用 1 次，以此类推，需要注意的是 <strong>verify 验证方法是包括方法调用时的参数都进行匹配的</strong>。</p>
+<p><code>never()</code> 方法就是验证方法没有被调用过，<code>atLeast()</code> 就是验证方法至少被调用 2 次，<code>atLeastOnce()</code> 是方法至少被调用 1 次，<code>atMost()</code> 相反是验证方法最多被调用的次数。</p>
+<p>这章先介绍到这里，在本章中我们主要了解了使用 @Mock 对对象进行 mock，stub 时对参数的匹配方法和 stub 无返回值方法的方式，以及 verify 额外次数的使用。</p>
+<hr>
+<p>本章节示例代码已经上传 GitHub，可<a href="https://github.com/CloneableX/mockito-demo" target="_blank" rel="noopener">点击跳转</a>查看代码详情</p>
 
       
     </div>
@@ -568,7 +576,7 @@
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
     
-    <a href="https://www.cloneable.cn/2019/06/02/tip/mockito/Mockito初探（三）——特别的Mock/" title="Mockito初探（三）——特别的Mock">https://www.cloneable.cn/2019/06/02/tip/mockito/Mockito初探（三）——特别的Mock/</a>
+    <a href="https://www.cloneable.cn/2019/05/26/tip/java/mockito/Mockito初探（二）——常用功能/" title="Mockito初探（二）——常用功能">https://www.cloneable.cn/2019/05/26/tip/java/mockito/Mockito初探（二）——常用功能/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -597,8 +605,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/02/data_structure_algorithm/数据结构与算法之美笔记——线性排序/" rel="next" title="数据结构与算法之美笔记——线性排序">
-                <i class="fa fa-chevron-left"></i> 数据结构与算法之美笔记——线性排序
+              <a href="/2019/05/26/leetcode/stack/easy/leetcode题号155_最小栈/" rel="next" title="leetcode 题号155 最小栈">
+                <i class="fa fa-chevron-left"></i> leetcode 题号155 最小栈
               </a>
             
           </div>
@@ -607,8 +615,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/02/leetcode/stack/easy/leetcode题号255_用队列实现栈/" rel="prev" title="leetcode 题号255 用队列实现栈">
-                leetcode 题号255 用队列实现栈 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/06/02/data_structure_algorithm/数据结构与算法之美笔记——线性排序/" rel="prev" title="数据结构与算法之美笔记——线性排序">
+                数据结构与算法之美笔记——线性排序 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -684,7 +692,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -711,7 +719,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">5</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -740,7 +754,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -814,7 +830,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Stub-返回不同值"><span class="nav-number">1.</span> <span class="nav-text">Stub 返回不同值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stub-自定义返回"><span class="nav-number">2.</span> <span class="nav-text">Stub 自定义返回</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#亦真亦假的-Spy"><span class="nav-number">3.</span> <span class="nav-text">亦真亦假的 Spy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mock-注解的使用"><span class="nav-number">1.</span> <span class="nav-text">@Mock 注解的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数匹配"><span class="nav-number">2.</span> <span class="nav-text">参数匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stub-无返回值方法"><span class="nav-number">3.</span> <span class="nav-text">Stub 无返回值方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#verify-额外次数"><span class="nav-number">4.</span> <span class="nav-text">verify 额外次数</span></a></li></ol></div>
             
 
           </div>
@@ -854,7 +870,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">28k</span>
+    <span title="站点总字数">35k</span>
   
 
   
@@ -863,7 +879,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">23 分钟</span>
+    <span title="站点阅读时长">29 分钟</span>
   
 </div>
 
