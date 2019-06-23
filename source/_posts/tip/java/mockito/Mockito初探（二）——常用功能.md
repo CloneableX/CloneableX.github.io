@@ -1,9 +1,10 @@
 ---
 title: Mockito初探（二）——常用功能
-p: tip/mockito/Mockito初探（二）——常用功能
+p: tip/java/mockito/Mockito初探（二）——常用功能
 date: 2019-05-26 16:28:16
 categories:
   - tip
+  - java
   - mockito
 tags:
   - mockito

@@ -1,13 +1,12 @@
 ---
 title: img 标签的响应 Content-Type
-p: tip/Img的响应Content-Type
+p: tip/web/Img的响应Content-Type
 date: 2019-06-09 14:52:32
 categories: 
   - tip
   - 前端
 tags:
   - 前端
-  - img标签
 ---
 
 ### 前言

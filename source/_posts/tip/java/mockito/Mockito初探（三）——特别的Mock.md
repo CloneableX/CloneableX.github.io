@@ -1,9 +1,10 @@
 ---
 title: Mockito初探（三）——特别的Mock
-p: tip/mockito/Mockito初探（三）——特别的Mock
+p: tip/java/mockito/Mockito初探（三）——特别的Mock
 date: 2019-06-02 17:20:28
 categories:
   - tip
+  - java
   - mockito
 tags:
   - mockito
