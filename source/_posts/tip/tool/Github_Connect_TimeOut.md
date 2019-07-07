@@ -4,7 +4,6 @@ date: 2019-06-22 16:48:26
 categories:
   - tip
   - tool
-  - github
 tags:
   - github
 ---
