@@ -520,7 +520,7 @@
 <h4 id="实现逻辑解析"><a href="#实现逻辑解析" class="headerlink" title="实现逻辑解析"></a>实现逻辑解析</h4><p>通过上一节的归并排序的逻辑描述可以看出，拆分数组与合并数组就是一个递归的过程，在递归章节讲过如果要实现递归代码最重要是的找到递推公式和终止条件。</p>
 <p>根据归并排序的逻辑可以得到如下的递推公式和终止条件。</p>
 <blockquote>
-<p>递推公式 $merge_sort(p,r)=merge(merge_sort(p,q),merge_sort(q+1,r))$<br>终止条件 $p\geq r$</p>
+<p>递推公式 $merge\_sort(p,r)=merge(merge\_sort(p,q),merge\_sort(q+1,r))$<br>终止条件 $p\geq r$</p>
 </blockquote>
 <p>主要说一下上面公式中参数，p 和 r 分别表示数组头、尾的元素下标，q 表示数组中间元素的下标，满足公式 $q=\frac{p+r}2$，当 $p\geq r$ 时就是数组被拆分到只有一个元素的时候，这个时候拆分终止。</p>
 <h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><h5 id="递归代码的实现"><a href="#递归代码的实现" class="headerlink" title="递归代码的实现"></a>递归代码的实现</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span>[] array, <span class="keyword">int</span> head, <span class="keyword">int</span> tail)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(head &gt;= tail) &#123;<span class="keyword">return</span>;&#125;</span><br><span class="line"></span><br><span class="line">  mergeSort(array, head, (head + tail) / <span class="number">2</span>);</span><br><span class="line">  mergeSort(array, (head + tail) / <span class="number">2</span> + <span class="number">1</span>, tail);</span><br><span class="line">  merge(array, head, tail);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -546,7 +546,7 @@
 <h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><h4 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h4><p>快速排序（以下简称「<strong>快排</strong>」）也是根据分治的思想而来，与归并排序相似，快排也会进行数组的拆分，但不同的是快排不会进行合并操作。快排的排序操作发生在分区，也就是子数组拆分的时候，快排进行分区时会选择数组中的一个元素作为「分区点」（ pivot ），接着遍历数组中元素并把元素与分区点进行比较，比分区点小的数据放置在分区点的左端，比分区点大的数据放置在分区点的右端，子数组的拆分就以分区点的位置为中间点进行拆分，子数组再进行同样的操作直到子数组元素只有 1 个时终止。</p>
 <h4 id="实现逻辑解析-1"><a href="#实现逻辑解析-1" class="headerlink" title="实现逻辑解析"></a>实现逻辑解析</h4><p>根据快排的原理，快排与归并排序类似，也是属于递归的方式实现，同样可以先分析快排的递推公式和终止条件。</p>
 <blockquote>
-<p>递推公式 $quick_sort(p,r)=partition(p,r)+quick_sort(p,q-1)+quick_sort(q+1,r)$<br>终止条件 $p\geq r$</p>
+<p>递推公式 $quick\_sort(p,r)=partition(p,r)+quick\_sort(p,q-1)+quick\_sort(q+1,r)$<br>终止条件 $p\geq r$</p>
 </blockquote>
 <p>递推公式中的 q 表示分区点的下标位置。</p>
 <h4 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(<span class="keyword">int</span>[] array, <span class="keyword">int</span> head, <span class="keyword">int</span> tail)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(head &gt;= tail) &#123;<span class="keyword">return</span>;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> pivot = partition(array, head, tail);</span><br><span class="line">  quickSort(array, head, pivot - <span class="number">1</span>);</span><br><span class="line">  quickSort(array, pivot + <span class="number">1</span>, tail);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -629,8 +629,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/14/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2019/03/18/data_structure_algorithm/数据结构与算法之美笔记——复杂度分析(上)/" rel="next" title="数据结构与算法之美笔记——复杂度分析(上)">
+                <i class="fa fa-chevron-left"></i> 数据结构与算法之美笔记——复杂度分析(上)
               </a>
             
           </div>
@@ -716,7 +716,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -747,9 +747,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -780,7 +778,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">7</span>
+                      
+                    
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -894,7 +894,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">35k</span>
+    <span title="站点总字数">55k</span>
   
 
   
@@ -903,7 +903,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">29 分钟</span>
+    <span title="站点阅读时长">46 分钟</span>
   
 </div>
 
