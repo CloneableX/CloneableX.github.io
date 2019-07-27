@@ -2,8 +2,9 @@
 title: leetcode 题号496 Next Greater Element I
 categories:
   - leetcode解题
+  - stack
 tags:
-  - leetcode-stack
+  - leetcode
 p: leetcode/stack/easy/leetcode题号496_NextGreaterElementI
 date: 2019-06-23 18:01:23
 ---

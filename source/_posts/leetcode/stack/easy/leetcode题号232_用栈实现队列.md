@@ -2,6 +2,7 @@
 title: leetcode 题号232 用栈实现队列
 categories:
   - leetcode解题
+  - stack
 tags:
   - leetcode
 p: leetcode/stack/easy/leetcode题号232_用栈实现队列

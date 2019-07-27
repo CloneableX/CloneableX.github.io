@@ -2,6 +2,7 @@
 title: leetcode 题号844 Backspace String Compare
 categories:
   - leetcode解题
+  - stack
 tags:
   - leetcode
 p: leetcode\stack\easy\leetcode题号844_BackspaceStringCompare.md

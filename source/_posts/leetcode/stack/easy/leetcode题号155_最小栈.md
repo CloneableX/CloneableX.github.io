@@ -2,9 +2,9 @@
 title: 'leetcode 题号155 最小栈'
 categories:
   - leetcode解题
+  - stack
 tags:
   - leetcode
-  - 栈
 p: 'leetcode/stack/easy/leetcode题号155_最小栈'
 date: 2019-05-26 09:03:38
 ---

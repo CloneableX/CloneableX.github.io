@@ -2,6 +2,7 @@
 title: leetcode 题号1047 Remove All Adjacent Duplicates In String
 categories:
   - leetcode解题
+  - stack
 tags:
   - leetcode
 p: leetcode\stack\easy\leetcode题号1047_RemoveAllAdjacentDuplicatesInString

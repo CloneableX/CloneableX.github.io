@@ -2,9 +2,9 @@
 title: 'leetcode 题号255 用队列实现栈'
 categories:
   - leetcode解题
+  - stack
 tags:
   - leetcode
-  - 栈
 p: 'leetcode/stack/easy/leetcode题号255_用队列实现栈'
 date: 2019-06-02 19:55:58
 ---
