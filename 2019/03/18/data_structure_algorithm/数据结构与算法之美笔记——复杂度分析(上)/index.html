@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="Cloneable的小站">
 <meta property="og:description" content="前言关于算法的笔记我调整了一下书写的方式，接下来的笔记我都会以总结开篇，通过自己对总结的发问倒推详情，最后以解答老师的思考题结束。 摘要：  一段代码所需执行时间和执行时需要的存储空间在算法中有统一的评价标准，被称为「复杂度」，分为「（渐进）时间复杂度」和「（渐进）空间复杂度」，都以大 O 表示法表示。  对于上述摘要，初看的人会对几个名词疑惑不解。时间复杂度和空间复杂度是什么，大 O 表示法如何">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-14T03:40:32.731Z">
+<meta property="og:updated_time" content="2019-07-27T01:28:21.311Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构与算法之美笔记——复杂度分析(上)">
 <meta name="twitter:description" content="前言关于算法的笔记我调整了一下书写的方式，接下来的笔记我都会以总结开篇，通过自己对总结的发问倒推详情，最后以解答老师的思考题结束。 摘要：  一段代码所需执行时间和执行时需要的存储空间在算法中有统一的评价标准，被称为「复杂度」，分为「（渐进）时间复杂度」和「（渐进）空间复杂度」，都以大 O 表示法表示。  对于上述摘要，初看的人会对几个名词疑惑不解。时间复杂度和空间复杂度是什么，大 O 表示法如何">
@@ -419,7 +419,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-14 11:40:32" itemprop="dateModified" datetime="2019-07-14T11:40:32+08:00">2019-07-14</time>
+                <time title="修改时间：2019-07-27 09:28:21" itemprop="dateModified" datetime="2019-07-27T09:28:21+08:00">2019-07-27</time>
               
             
           </span>
@@ -572,7 +572,7 @@
 </blockquote>
 <p>同理如果第3行代码的 $i = i \times  2$ 修改为 $i = i \times  3$，那时间复杂度就为 $O(\log_3n)$，但对数间可以相互转化。</p>
 <blockquote>
-<p>$\log_3n = \log_3{2} \times  \log_2{3}$<br>所以 $O(\log_3n) = O(\log_3{2} \times  \log_2n)$<br>省略常量可以写为 $O(\log_2n)$</p>
+<p>$\log_3n = \log_3{2} \times  \log_2{n}$<br>所以 $O(\log_3n) = O(\log_3{2} \times  \log_2n)$<br>省略常量可以写为 $O(\log_2n)$</p>
 </blockquote>
 <p>所以这样的时间复杂度都写为 $O(\log{n})$。那 $O(n\log{n})$ 便是上一段代码中的循环外再嵌套执行 n 次的循环。</p>
 <h4 id="O-m-n-，O-m-n"><a href="#O-m-n-，O-m-n" class="headerlink" title="O(m+n)，O(m*n)"></a>O(m+n)，O(m*n)</h4><p>当一段代码的执行时间会被多个数据规模的变化影响时，可以使用这样的大 O 表示法。例如：</p>
@@ -744,7 +744,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -926,7 +926,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">75k</span>
+    <span title="站点总字数">87k</span>
   
 
   
@@ -935,7 +935,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">1:02</span>
+    <span title="站点阅读时长">1:12</span>
   
 </div>
 
