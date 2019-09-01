@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-clo.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-clo.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-clo.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo-clo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: true,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: 'EGCMUT6W5J',
+      apiKey: '29739acf21d37cac5c1dc285cd301f7f',
+      indexName: 'clo_blo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"查询不到结果: ${query}","hits_stats":"找到约 ${hits} 结果，用时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="摘要:  排序是算法中基础的算法，对于一个排序算法的评价需要从「时间复杂度」、「空间复杂度」和「是否稳定」三个方面综合分析。这章节主要讲解「冒泡排序」、「插入排序」和「选择排序」，这三个排序都是时间复杂度为 $O(n^2)$ 的算法，但在实际使用中更加偏向插入排序。  排序算法的执行效率分析一个排序算法的执行效率需要从时间复杂度、空间复杂度和是否稳定三个维度进行。 时间复杂度 最好、最坏、平均时间">
+<meta name="keywords" content="数据结构与算法之美笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法之美笔记——排序（上）">
+<meta property="og:url" content="https://www.cloneable.cn/2019/05/19/data_structure_algorithm/数据结构与算法之美笔记——排序（上）/index.html">
+<meta property="og:site_name" content="Cloneable的小站">
+<meta property="og:description" content="摘要:  排序是算法中基础的算法，对于一个排序算法的评价需要从「时间复杂度」、「空间复杂度」和「是否稳定」三个方面综合分析。这章节主要讲解「冒泡排序」、「插入排序」和「选择排序」，这三个排序都是时间复杂度为 $O(n^2)$ 的算法，但在实际使用中更加偏向插入排序。  排序算法的执行效率分析一个排序算法的执行效率需要从时间复杂度、空间复杂度和是否稳定三个维度进行。 时间复杂度 最好、最坏、平均时间">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/16871983-cc622dd9c7d67de6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-08-25T03:34:13.428Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构与算法之美笔记——排序（上）">
+<meta name="twitter:description" content="摘要:  排序是算法中基础的算法，对于一个排序算法的评价需要从「时间复杂度」、「空间复杂度」和「是否稳定」三个方面综合分析。这章节主要讲解「冒泡排序」、「插入排序」和「选择排序」，这三个排序都是时间复杂度为 $O(n^2)$ 的算法，但在实际使用中更加偏向插入排序。  排序算法的执行效率分析一个排序算法的执行效率需要从时间复杂度、空间复杂度和是否稳定三个维度进行。 时间复杂度 最好、最坏、平均时间">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/16871983-cc622dd9c7d67de6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://www.cloneable.cn/2019/05/19/data_structure_algorithm/数据结构与算法之美笔记——排序（上）/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>数据结构与算法之美笔记——排序（上） | Cloneable的小站</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/CloneableX" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cloneable的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.cloneable.cn/2019/05/19/data_structure_algorithm/数据结构与算法之美笔记——排序（上）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cloneable">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cloneable的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据结构与算法之美笔记——排序（上）
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-19 10:18:07" itemprop="dateCreated datePublished" datetime="2019-05-19T10:18:07+08:00">2019-05-19</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-08-25 11:34:13" itemprop="dateModified" datetime="2019-08-25T11:34:13+08:00">2019-08-25</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据结构与算法/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/05/19/data_structure_algorithm/数据结构与算法之美笔记——排序（上）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/19/data_structure_algorithm/数据结构与算法之美笔记——排序（上）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">4.7k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">4 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>摘要:</strong></p>
+<blockquote>
+<p>排序是算法中基础的算法，对于一个排序算法的评价需要从「<strong>时间复杂度</strong>」、「<strong>空间复杂度</strong>」和「<strong>是否稳定</strong>」三个方面综合分析。这章节主要讲解「<strong>冒泡排序</strong>」、「<strong>插入排序</strong>」和「<strong>选择排序</strong>」，这三个排序都是时间复杂度为 $O(n^2)$ 的算法，但在实际使用中更加偏向插入排序。</p>
+</blockquote>
+<h3 id="排序算法的执行效率"><a href="#排序算法的执行效率" class="headerlink" title="排序算法的执行效率"></a>排序算法的执行效率</h3><p>分析一个排序算法的执行效率需要从时间复杂度、空间复杂度和是否稳定三个维度进行。</p>
+<h4 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h4><ul>
+<li><strong>最好、最坏、平均时间复杂度</strong></li>
+</ul>
+<p>排序算法不仅要分析平均时间复杂度，最好和最坏时间复杂度也需要分析，因为一组完全有序的数据和一组完全无序的数据对排序算法的时间影响很大，所以这三种时间复杂度都需要分析。</p>
+<ul>
+<li><strong>时间复杂度的低阶、系数和常数</strong></li>
+</ul>
+<p>一般情况时间复杂度的表示会忽略低阶、系数和常数，因为时间复杂度只是描述一个执行时间随数据规模 $n$ 变化的趋势，但实际开发中排序会遇到很多数据规模较小的情况，同阶时间复杂度的对比中需要把低阶、系数和常数考虑进来。</p>
+<ul>
+<li><strong>比较次数和交换次数</strong></li>
+</ul>
+<p>这节讲解的排序算法主要是基于比较的排序算法，基于比较的排序算法主要操作就是数据的比较和交换，所以对于排序算法需要把比较次数和交换次数作为一个比较标准。</p>
+<h4 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h4><p>空间复杂度可以衡量排序算法的内存占用情况，基于空间复杂度的分析排序算法还引入了一个概念「<strong>原地排序</strong>」，原地排序就是指空间复杂度为 $O(1)$ 的排序算法。</p>
+<h4 id="稳定性"><a href="#稳定性" class="headerlink" title="稳定性"></a>稳定性</h4><p>如果两个相同的数据经过排序之后位置的前后顺序不会改变，这样的排序算法就是稳定的排序算法，排序算法的稳定性有什么作用？</p>
+<p>实际开发中排序不只用于单纯的数字排序，有可能会根据某个对象的 key 值对对象进行排序。举个例子，比如需要对一组订单数据进行排序，按订单金额从小到大排序，相同金额的订单按下单时间先后排序。面对这样的需求可能最开始想到的方案是先按照订单金额排序，再对相同金额区间的数据进行时间排序，但这样实现会相对复杂；另一种方案就是先把数据按下单时间顺序排序，再将数据以稳定的排序算法进行金额的排序，稳定的排序算法在对金额进行排序的同时不会影响已经排序好的下单时间顺序，这样也可以完成需求，并且只是对数据简单地进行了两次排序，实现起来难度较低一些。</p>
+<h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><p>冒泡排序会遍历需要排序的数据，被遍历到的当前数据与后一位比较，如果当前数据大于后一位就进行交换，遍历到结束后末尾数据必然为当前遍历数据中最大的一个，除去最后一位其他数据还需要进行排序，可以再以相同的方式对其他数据进行排序，直到需要排序的数据个数为 0时排序完成，冒泡排序的操作如下图。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/16871983-cc622dd9c7d67de6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="冒泡排序"></p>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span>[] values, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; len - i - <span class="number">1</span>; j++) &#123;</span><br><span class="line">			<span class="keyword">if</span>(values[j] &gt; values[j + <span class="number">1</span>]) &#123;</span><br><span class="line">				<span class="keyword">int</span> temp = values[j + <span class="number">1</span>];</span><br><span class="line">				values[j + <span class="number">1</span>] = values[j];</span><br><span class="line">				values[j] = temp;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>虽然这个段代码实现了冒泡排序，但是当一组数据有序时还是需要不断重复遍历比较，其实数据有序之后的重复遍历都是没有必要的，当一次遍历排序中没有数据交换我们就可以认为这组数据已经完全有序，并且结束整个排序，代码如下。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span>[] values, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">		<span class="comment">// mark weather value is exchanged when bubble sorting</span></span><br><span class="line">		<span class="keyword">boolean</span> isExc = <span class="keyword">false</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; len - i - <span class="number">1</span>; j++) &#123;</span><br><span class="line">			<span class="keyword">if</span>(values[j] &gt; values[j + <span class="number">1</span>]) &#123;</span><br><span class="line">				isExc = <span class="keyword">true</span>;</span><br><span class="line">				<span class="keyword">int</span> temp = values[j + <span class="number">1</span>];</span><br><span class="line">				values[j + <span class="number">1</span>] = values[j];</span><br><span class="line">				values[j] = temp;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(!isExc) &#123;<span class="keyword">break</span>;&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="执行效率分析"><a href="#执行效率分析" class="headerlink" title="执行效率分析"></a>执行效率分析</h4><h5 id="最好时间复杂度"><a href="#最好时间复杂度" class="headerlink" title="最好时间复杂度"></a>最好时间复杂度</h5><p>当数据完全有序时，只需要一次遍历，所以时间复杂度为$O(n)$。</p>
+<h5 id="最坏时间复杂度"><a href="#最坏时间复杂度" class="headerlink" title="最坏时间复杂度"></a>最坏时间复杂度</h5><p>当一组数据完全无序时，每次排序需要遍历的次数分别为$n,n-1,n-2,…,3,2,1$次，所以时间复杂度为$O(n^2)$。</p>
+<h5 id="平均时间复杂度"><a href="#平均时间复杂度" class="headerlink" title="平均时间复杂度"></a>平均时间复杂度</h5><p>冒泡排序的平均时间复杂度分析需要使用加权平均数，计算比较复杂，这里引入一种粗略估算平均时间复杂度的方式。这种方式主要有两个概念「<strong>有序度</strong>」「<strong>无序度</strong>」，有序度就是指一组数据中有序的数据对数， 无序度就是正好相反，指一组数据中无序的数据对数，而完全有序的一组数据的有序度称为「<strong>满有序度</strong>」，这三个度量之间存在 <strong>无序度 = 满有序度 - 有序度</strong> 的数学关系。</p>
+<blockquote>
+<p>例：一组数据为 $3,8,6$,这组数据的有序度为 2，有序对分别是(3,8)，(3,6)，满有序度满足公式 $n\times\frac{n-1}{2}$ (n 为数据量)，所以这组数据满有序度为 3，根据三者间的关系计算无序度为 1。</p>
+</blockquote>
+<p>冒泡排序进行一次交换就会使数据的有序度增加 1，相应的就是无序度减少 1，冒泡排序结束的标志是无序度为 0 , 所以无序度就是冒泡排序要进行数据交换的次数，完全无序的一组数据交换次数为 $n\times\frac{n-1}{2}$，那我取无序度为一半的情况为平均情况，也就是交换次数为 $n\times\frac{n-1}{4}$，所以冒泡排序的平均时间复杂度为 $O(n^2)$。</p>
+<h5 id="是否原地排序"><a href="#是否原地排序" class="headerlink" title="是否原地排序"></a>是否原地排序</h5><p>冒泡排序中只有在数据交换时额外申请了一个存储空间，所以空间复杂度为 $O(1)$，冒泡排序是原地排序算法。</p>
+<h5 id="稳定性-1"><a href="#稳定性-1" class="headerlink" title="稳定性"></a>稳定性</h5><p>比较数据时可以控制只有大于的情况才进行交换，相等的情况不进行数据交换，相等的数据顺序就不会被改变，所以冒泡排序是稳定的排序算法。</p>
+<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><p>当把一个数据插入一个有序数组时要保持数据的有序，我们会将这个数据在数组中比对，找到这个数据合适的位置，将其他数据进行搬移，将这个数据插入相应的位置，这样就可以保证数据的有序性。</p>
+<p>插入排序也是利用相同的思想，将一组数据分为 「<strong>有序区</strong>」和「<strong>无序区</strong>」，遍历无序区的数据并将其插入有序区，而且需要保持有序区的数据完全有序。</p>
+<h4 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span>[] array, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; i++) &#123;</span><br><span class="line">		<span class="keyword">int</span> value = array[i];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = i -<span class="number">1</span>; j &gt;= <span class="number">0</span>; j--) &#123;</span><br><span class="line">			<span class="keyword">if</span>(value &lt; array[j]) &#123;</span><br><span class="line">				array[j + <span class="number">1</span>] = array[j];</span><br><span class="line">				<span class="keyword">if</span>(j == <span class="number">0</span>) &#123;</span><br><span class="line">					array[j] = value;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				array[j + <span class="number">1</span>] = value;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="执行效率分析-1"><a href="#执行效率分析-1" class="headerlink" title="执行效率分析"></a>执行效率分析</h4><h5 id="最好时间复杂度-1"><a href="#最好时间复杂度-1" class="headerlink" title="最好时间复杂度"></a>最好时间复杂度</h5><p>完全有序的数据中需要遍历一次就可以完成插入排序，所以最好时间复杂度为 $O(n)$。</p>
+<h5 id="最坏时间复杂度-1"><a href="#最坏时间复杂度-1" class="headerlink" title="最坏时间复杂度"></a>最坏时间复杂度</h5><p>完全无序的一组数据需要进行 n 次排序，每次排序进行的数据搬移的时间复杂度为 $O(n)$，所以最坏时间复杂度为 $O(n^2)$。</p>
+<h5 id="平均时间复杂度-1"><a href="#平均时间复杂度-1" class="headerlink" title="平均时间复杂度"></a>平均时间复杂度</h5><p>与冒泡排序相似，完成一次数据交换使一组数据无序度减 1，完成插入排序就是使无序度为 0，平均情况下需要进行 $n\times\frac{n-1}{4}$ 次数据交换，所以插入排序的平均时间复杂度为 $O(n^2)$。</p>
+<h5 id="是否原地排序-1"><a href="#是否原地排序-1" class="headerlink" title="是否原地排序"></a>是否原地排序</h5><p>插入排序没有申请额外的存储空间，空间复杂度为 $O(1)$，所以插入排序是原地排序。</p>
+<h5 id="稳定性-2"><a href="#稳定性-2" class="headerlink" title="稳定性"></a>稳定性</h5><p>在插入排序将无序区数据向有序区进行插入时，比较数据可以控制为当插入数据小于有序区数据时才交换，相等的数据前后顺序可以保证，所以插入排序是稳定的排序算法。</p>
+<h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><p>选择排序也是将一组数据分为有序区和无序区，不过与插入排序不同的是，选择排序会在无序区选择最小的一个数据，将其放置到有序区的末尾。</p>
+<h4 id="代码实现-2"><a href="#代码实现-2" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span>[] array, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">		<span class="keyword">int</span> minValueIndex = i;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = i; j &lt; len - <span class="number">1</span>; j++) &#123;</span><br><span class="line">			<span class="keyword">if</span>(array[j + <span class="number">1</span>] &lt; array[j]) &#123;</span><br><span class="line">				minValueIndex = j + <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> temp = array[i];</span><br><span class="line">		array[i] = array[minValueIndex];</span><br><span class="line">		array[minValueIndex] = temp;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="执行效率分析-2"><a href="#执行效率分析-2" class="headerlink" title="执行效率分析"></a>执行效率分析</h4><h5 id="时间复杂度-1"><a href="#时间复杂度-1" class="headerlink" title="时间复杂度"></a>时间复杂度</h5><p>选择排序无论一组数据是完全有序还是完全无序都需要循环 n 次在无序区查找最小值并将最小值插入有序区末尾的操作，无序区查找最小值的平均时间复杂度为 $O(n)$，所以选择排序的最好、最坏时间复杂度都是 $O(n^2)$。</p>
+<p>选择排序的平均时间复杂度分析与最好、最坏时间复杂度分析类似，所以选择排序的平均时间复杂度为 $O(n^2)$。</p>
+<h5 id="是否原地排序-2"><a href="#是否原地排序-2" class="headerlink" title="是否原地排序"></a>是否原地排序</h5><p>选择排序只是在数据交换时申请了额外的一个空间存储，空间复杂度为 $O(1)$，所以选择排序是原地排序算法。</p>
+<h5 id="稳定性-3"><a href="#稳定性-3" class="headerlink" title="稳定性"></a>稳定性</h5><p>选择排序会将无序区中最小数据与无序区第一个数据交换，这样的数据交换会影响相等数据的顺序，所以选择排序是不稳定的排序算法。</p>
+<blockquote>
+<p>例：一组数据为 $5,3,5,2,1$，这组数据在选择排序的第一次操作中会将 1 与第一个 5 进行交换，这样两个 5 的顺序就产生了变化。</p>
+</blockquote>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">算法名称</th>
+<th style="text-align:left">空间复杂度</th>
+<th style="text-align:left">稳定性</th>
+<th style="text-align:left">最好、最坏、平均时间复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">冒泡排序</td>
+<td style="text-align:left">原地排序</td>
+<td style="text-align:left">稳定</td>
+<td style="text-align:left">$O(n)$ $O(n^2)$ $O(n^2)$</td>
+</tr>
+<tr>
+<td style="text-align:left">插入排序</td>
+<td style="text-align:left">原地排序</td>
+<td style="text-align:left">稳定</td>
+<td style="text-align:left">$O(n)$ $O(n^2)$ $O(n^2)$</td>
+</tr>
+<tr>
+<td style="text-align:left">选择排序</td>
+<td style="text-align:left">原地排序</td>
+<td style="text-align:left">不稳定</td>
+<td style="text-align:left">$O(n^2)$ $O(n^2)$ $O(n^2)$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>虽然冒泡排序和插入排序在执行效率的三个维度上的结果都是一样的，但是实际中更加偏向使用插入排序，原因是在数据交换的操作上冒泡排序会进行三步操作，但插入排序只需要进行一步操作就可以完成数据交换，这里会影响排序算法的执行效率。</p>
+<hr>
+<blockquote>
+<p><strong>文章中如有问题欢迎留言指正<br>此章节的冒泡排序、插入排序和选择排序代码已经上传GitHub<a href="https://github.com/CloneableX/data_structures_algorithm/tree/master/sort/src" target="_blank" rel="noopener">点击跳转</a>查看代码。<br>数据结构与算法之美笔记系列将会做为我对王争老师此专栏的学习笔记，如想了解更多王争老师专栏的详情请到极客时间自行搜索。</strong></p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Cloneable</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://www.cloneable.cn/2019/05/19/data_structure_algorithm/数据结构与算法之美笔记——排序（上）/" title="数据结构与算法之美笔记——排序（上）">https://www.cloneable.cn/2019/05/19/data_structure_algorithm/数据结构与算法之美笔记——排序（上）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构与算法之美笔记/" rel="tag"># 数据结构与算法之美笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/12/data_structure_algorithm/数据结构与算法之美笔记——递归/" rel="next" title="数据结构与算法之美笔记——递归">
+                <i class="fa fa-chevron-left"></i> 数据结构与算法之美笔记——递归
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/25/data_structure_algorithm/数据结构与算法之美笔记——排序（下）/" rel="prev" title="数据结构与算法之美笔记——排序（下）">
+                数据结构与算法之美笔记——排序（下） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Cloneable">
+            
+              <p class="site-author-name" itemprop="name">Cloneable</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/CloneableX" title="GitHub &rarr; https://github.com/CloneableX" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:cloneable@163.com" title="E-Mail &rarr; mailto:cloneable@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#排序算法的执行效率"><span class="nav-number">1.</span> <span class="nav-text">排序算法的执行效率</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#时间复杂度"><span class="nav-number">1.1.</span> <span class="nav-text">时间复杂度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#空间复杂度"><span class="nav-number">1.2.</span> <span class="nav-text">空间复杂度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#稳定性"><span class="nav-number">1.3.</span> <span class="nav-text">稳定性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#冒泡排序"><span class="nav-number">2.</span> <span class="nav-text">冒泡排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-number">2.1.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行效率分析"><span class="nav-number">2.2.</span> <span class="nav-text">执行效率分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#最好时间复杂度"><span class="nav-number">2.2.1.</span> <span class="nav-text">最好时间复杂度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#最坏时间复杂度"><span class="nav-number">2.2.2.</span> <span class="nav-text">最坏时间复杂度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#平均时间复杂度"><span class="nav-number">2.2.3.</span> <span class="nav-text">平均时间复杂度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#是否原地排序"><span class="nav-number">2.2.4.</span> <span class="nav-text">是否原地排序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#稳定性-1"><span class="nav-number">2.2.5.</span> <span class="nav-text">稳定性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入排序"><span class="nav-number">3.</span> <span class="nav-text">插入排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现-1"><span class="nav-number">3.1.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行效率分析-1"><span class="nav-number">3.2.</span> <span class="nav-text">执行效率分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#最好时间复杂度-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">最好时间复杂度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#最坏时间复杂度-1"><span class="nav-number">3.2.2.</span> <span class="nav-text">最坏时间复杂度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#平均时间复杂度-1"><span class="nav-number">3.2.3.</span> <span class="nav-text">平均时间复杂度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#是否原地排序-1"><span class="nav-number">3.2.4.</span> <span class="nav-text">是否原地排序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#稳定性-2"><span class="nav-number">3.2.5.</span> <span class="nav-text">稳定性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择排序"><span class="nav-number">4.</span> <span class="nav-text">选择排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现-2"><span class="nav-number">4.1.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行效率分析-2"><span class="nav-number">4.2.</span> <span class="nav-text">执行效率分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#时间复杂度-1"><span class="nav-number">4.2.1.</span> <span class="nav-text">时间复杂度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#是否原地排序-2"><span class="nav-number">4.2.2.</span> <span class="nav-text">是否原地排序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#稳定性-3"><span class="nav-number">4.2.3.</span> <span class="nav-text">稳定性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cloneable</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">108k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">1:30</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'uf12PDmrUOMN7OhqQCS0OF7l-gzGzoHsz',
+    appKey: 'MX31bCoCIzO71iuoj69S52dt',
+    placeholder: '用你的评论来撩我哟！😉',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: 'zh-cn' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/algolia-search.js?v=7.1.2"></script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      const selection = document.getSelection();
+      const selected = selection.rangeCount > 0 ? selection.getRangeAt(0) : false;
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+      if (selected) {
+        selection.removeAllRanges();
+        selection.addRange(selected);
+      }
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-clo.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-clo.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-clo.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo-clo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: true,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: 'EGCMUT6W5J',
+      apiKey: '29739acf21d37cac5c1dc285cd301f7f',
+      indexName: 'clo_blo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"查询不到结果: ${query}","hits_stats":"找到约 ${hits} 结果，用时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="摘要:  树是一种非线性表结构，多用链表的方式存储，也可使用数组存储，以节点为数据存储单元，节点的链接表示父子关系，二叉树是树的其中一种，一个父节点最多可以有两个子节点，遍历节点的时间复杂度为 $O(n)$。  树（Tree）树长什么样这种数据结构称为树，那一定和现实中的树存在着某些联系。首先我们来回忆一下现实中的树是什么模样，树都由根长起，然后分叉为枝丫，枝丫顶端生长出叶子，数据结构中的树也是类">
+<meta name="keywords" content="数据结构与算法之美笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法之美笔记——树与二叉树">
+<meta property="og:url" content="https://www.cloneable.cn/2019/08/10/data_structure_algorithm/数据结构与算法之美笔记——树与二叉树/index.html">
+<meta property="og:site_name" content="Cloneable的小站">
+<meta property="og:description" content="摘要:  树是一种非线性表结构，多用链表的方式存储，也可使用数组存储，以节点为数据存储单元，节点的链接表示父子关系，二叉树是树的其中一种，一个父节点最多可以有两个子节点，遍历节点的时间复杂度为 $O(n)$。  树（Tree）树长什么样这种数据结构称为树，那一定和现实中的树存在着某些联系。首先我们来回忆一下现实中的树是什么模样，树都由根长起，然后分叉为枝丫，枝丫顶端生长出叶子，数据结构中的树也是类">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2019/08/10/L5AdQPvEocqhFtn.png">
+<meta property="og:image" content="https://i.loli.net/2019/08/10/NW1OwXdY9VrKeJn.png">
+<meta property="og:updated_time" content="2019-08-11T10:00:17.232Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构与算法之美笔记——树与二叉树">
+<meta name="twitter:description" content="摘要:  树是一种非线性表结构，多用链表的方式存储，也可使用数组存储，以节点为数据存储单元，节点的链接表示父子关系，二叉树是树的其中一种，一个父节点最多可以有两个子节点，遍历节点的时间复杂度为 $O(n)$。  树（Tree）树长什么样这种数据结构称为树，那一定和现实中的树存在着某些联系。首先我们来回忆一下现实中的树是什么模样，树都由根长起，然后分叉为枝丫，枝丫顶端生长出叶子，数据结构中的树也是类">
+<meta name="twitter:image" content="https://i.loli.net/2019/08/10/L5AdQPvEocqhFtn.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://www.cloneable.cn/2019/08/10/data_structure_algorithm/数据结构与算法之美笔记——树与二叉树/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>数据结构与算法之美笔记——树与二叉树 | Cloneable的小站</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/CloneableX" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cloneable的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.cloneable.cn/2019/08/10/data_structure_algorithm/数据结构与算法之美笔记——树与二叉树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cloneable">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cloneable的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据结构与算法之美笔记——树与二叉树
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-10 13:39:21" itemprop="dateCreated datePublished" datetime="2019-08-10T13:39:21+08:00">2019-08-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-08-11 18:00:17" itemprop="dateModified" datetime="2019-08-11T18:00:17+08:00">2019-08-11</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据结构与算法/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/08/10/data_structure_algorithm/数据结构与算法之美笔记——树与二叉树/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/08/10/data_structure_algorithm/数据结构与算法之美笔记——树与二叉树/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">3.1k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">3 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>摘要:</strong></p>
+<blockquote>
+<p>树是一种非线性表结构，多用链表的方式存储，也可使用数组存储，以节点为数据存储单元，节点的链接表示父子关系，二叉树是树的其中一种，一个父节点最多可以有两个子节点，遍历节点的时间复杂度为 $O(n)$。</p>
+</blockquote>
+<h3 id="树（Tree）"><a href="#树（Tree）" class="headerlink" title="树（Tree）"></a>树（Tree）</h3><h4 id="树长什么样"><a href="#树长什么样" class="headerlink" title="树长什么样"></a>树长什么样</h4><p>这种数据结构称为树，那一定和现实中的树存在着某些联系。首先我们来回忆一下现实中的树是什么模样，树都由根长起，然后分叉为枝丫，枝丫顶端生长出叶子，数据结构中的树也是类似的样子，只不过将现实中的树颠倒过来，树的关键位置都统称为「<strong>节点（Node）</strong>」，树的根称为「<strong>根节点</strong>」，叶子称为「<strong>叶子节点</strong>」，树枝分叉的位置也是节点，节点之间依靠树枝连接，直接连接的节点间存在父子关系，离根节点更近的是「<strong>父节点</strong>」，父结点分叉出直接相连的节点是它的「<strong>子节点</strong>」。</p>
+<p><img src="https://i.loli.net/2019/08/10/L5AdQPvEocqhFtn.png" alt></p>
+<h4 id="树的三个属性"><a href="#树的三个属性" class="headerlink" title="树的三个属性"></a>树的三个属性</h4><p>树除了以上介绍的特点以外还有三个属性，分别是「<strong>高度（Height）</strong>」、「<strong>深度（Depth）</strong>」和「<strong>层（Level）</strong>」，高度又有节点的高度和树的高度，几个属性的解释如下。</p>
+<blockquote>
+<p>节点的高度 = 节点到叶子节点的最大边数<br>节点的深度 = 根节点到节点的边数<br>节点的层数 = 节点的深度 + 1<br>树的高度 = 根节点的高度</p>
+</blockquote>
+<p>节点的高度和深度看起来很相似，不过是参照物不同而已，描述高度时的参照物是叶子节点，描述深度的参照物是根节点，这与现实生活中描述高度和深度是一致的。树只是对这一类型数据结构的统称，它也分为很多种类型，接下来介绍一下二叉树。</p>
+<h3 id="二叉树（Binary-Tree）"><a href="#二叉树（Binary-Tree）" class="headerlink" title="二叉树（Binary Tree）"></a>二叉树（Binary Tree）</h3><p>现实中的树可以分叉多个枝丫，而数据结构中的树也是如此，而二叉树就是规定最多只能分叉两个枝丫，这意味着一个节点最多只能有两个子节点，结点分布在左右两边，以左边节点为根节点构成的树称为「<strong>左子树</strong>」，以右边子节点为根节点构成的树就是「<strong>右子树</strong>」。</p>
+<h4 id="二叉树中的特殊类型"><a href="#二叉树中的特殊类型" class="headerlink" title="二叉树中的特殊类型"></a>二叉树中的特殊类型</h4><p>即便二叉树看起来如此平凡，但不免也会出现几个骨骼精奇的特殊形态。如下图，一号树就是普通二叉树，而二号树每一层都处于满节点状态，这种二叉树被称为「<strong>满二叉树</strong>」，当然还有三号树，初看之下并不觉得其有什么特点，但仔细分析，三号树除了最后一层外其他层都是满节点状态，最后一层为满节点或右边连续缺少若干节点，这种二叉树被称为「<strong>完全二叉树</strong>」，这样看来满二叉树只是完全二叉树的一种特殊形态。</p>
+<p><img src="https://i.loli.net/2019/08/10/NW1OwXdY9VrKeJn.png" alt></p>
+<p>满二叉树的特殊容易理解，但完全二叉树有何特殊之处？这个问题要从二叉树的存储形式说起，普遍情况下树都是使用链表进行存储，链表节点除存储自身数据外还存储左子节点指针和右子节点指针，但是树也可以使用数组存储，接下来用二叉树举例说明一下数组是如何存储树的。</p>
+<p>首先将根节点存储在下标为 1 的数组元素中，根元素的左子节点存储在下标为 2 <em> 1 的数组元素中，右子节点存储在下标为 2 </em> 1 + 1 的数组元素中，其他节点也以同样规则存储，当前节点存储在下标为 i 的数组元素中，当前节点的左子节点存储在下标为 2 <em> i 的数组元素中，右子节点存储在下标为 2 </em> i + 1 的数组元素中，当前节点的父节点就存储在下标为 i / 2 的数组元素中。试想一下如果存储的是满二叉树或者完全二叉树时，节点的存储是连续的，而其他的二叉树都会出现数组元素空缺的状态，这也正是完全二叉树的特殊之处。</p>
+<p>本来利用链表存储树挺不错的，为啥非要使用数组？使用链表时，存储子节点指针需要消耗存储空间，如果是数组就不存在这样的问题，数组获取当前节点的父节点的操作更加便捷，不过如果不是存储满二叉树或者完全二叉树时，数组中也会浪费大量的存储空间，所以在树的存储上普遍都是使用链表。</p>
+<h4 id="遍历二叉树"><a href="#遍历二叉树" class="headerlink" title="遍历二叉树"></a>遍历二叉树</h4><p>树的形态特殊，想要遍历树也有些方式方法，分别是「<strong>前序遍历</strong>」、「<strong>中序遍历</strong>」和「<strong>后序遍历</strong>」。这里的前中后都是以当前节点来说，当前节点存在左子节点和右子节点，要遍历这三个节点就有不同的顺序，而左子节点要保持在右子节点之前遍历，于是出现三种遍历顺序，如下所示。</p>
+<blockquote>
+<p>中-&gt;左-&gt;右 前序遍历<br>左-&gt;中-&gt;右 中序遍历<br>左-&gt;右-&gt;中 后序遍历</p>
+</blockquote>
+<h5 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h5><p>说了那么多，不如来段代码解解乏。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Node left;</span><br><span class="line">    <span class="keyword">private</span> Node right;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> data;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildChildren</span><span class="params">(Node left, Node right)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.left = left;</span><br><span class="line">        <span class="keyword">this</span>.right = right;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> Node root;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">BinaryTree</span><span class="params">(<span class="keyword">int</span>[] nodes)</span> </span>&#123;</span><br><span class="line">    root = buildTree(<span class="number">1</span>, nodes);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> Node <span class="title">buildTree</span><span class="params">(<span class="keyword">int</span> currIndex, <span class="keyword">int</span>[] nodes)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(currIndex &gt;= nodes.length || nodes[currIndex] &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Node node  = <span class="keyword">new</span> Node(nodes[currIndex]);</span><br><span class="line">    node.buildChildren(buildTree(currIndex * <span class="number">2</span>, nodes),buildTree(currIndex * <span class="number">2</span> + <span class="number">1</span>, nodes));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printNodesBefore</span><span class="params">(Node node)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node.left == <span class="keyword">null</span> &amp;&amp; node.right == <span class="keyword">null</span>) &#123;</span><br><span class="line">        System.out.print(node.data + <span class="string">" "</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    System.out.print(node.data + <span class="string">" "</span>);</span><br><span class="line">    System.out.print(node.data + <span class="string">"'s left:"</span>);</span><br><span class="line">    printNodesBefore(node.left);</span><br><span class="line">    System.out.print(node.data + <span class="string">"'s right:"</span>);</span><br><span class="line">    printNodesBefore(node.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码中我用递归的方式实现了前序遍历，关于中序遍历和后序遍历的实现可以到我的 <a href="https://github.com/CloneableX/data_structures_algorithm/tree/master/tree/src" target="_blank" rel="noopener">Git 仓库</a> 中查看。</p>
+<h5 id="遍历的时间复杂度"><a href="#遍历的时间复杂度" class="headerlink" title="遍历的时间复杂度"></a>遍历的时间复杂度</h5><p>单独看递归方法中的代码时间复杂度是 $O(1)$，但是递归的时间复杂度需要累积计算，遍历有 n 个结点的二叉树时间，需要递归 n 次，所以遍历二叉树节点的时间复杂度就是 $O(n)$。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>树是一种非线性表结构，使用节点作为数据存储单元，可以利用链表或者数组实现，链表实现的方式更加普遍。</p>
+<p>二叉树是树的一种类型，一个节点最多只允许有两个子节点，二叉树中存在完全二叉树和满二叉树两种特殊形态，遍历二叉树可以使用前序、中序和后序三种遍历方式，二叉树遍历的时间复杂度是 $O(n)$。</p>
+<hr>
+<blockquote>
+<p><strong>文章中如有问题欢迎留言指正<br>本章节代码已经上传GitHub，可<a href="https://github.com/CloneableX/data_structures_algorithm/tree/master/tree/src" target="_blank" rel="noopener">点击跳转</a>查看代码详情。<br>数据结构与算法之美笔记系列将会做为我对王争老师此专栏的学习笔记，如想了解更多王争老师专栏的详情请到极客时间自行搜索。</strong></p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Cloneable</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://www.cloneable.cn/2019/08/10/data_structure_algorithm/数据结构与算法之美笔记——树与二叉树/" title="数据结构与算法之美笔记——树与二叉树">https://www.cloneable.cn/2019/08/10/data_structure_algorithm/数据结构与算法之美笔记——树与二叉树/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构与算法之美笔记/" rel="tag"># 数据结构与算法之美笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/04/data_structure_algorithm/数据结构与算法之美笔记——哈希算法/" rel="next" title="数据结构与算法之美笔记——哈希算法">
+                <i class="fa fa-chevron-left"></i> 数据结构与算法之美笔记——哈希算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/31/leetcode/sort/easy/leetcode题号976_LargestPerimeterTriangle/" rel="prev" title="leetcode 题号976 Largest Perimeter Triangle">
+                leetcode 题号976 Largest Perimeter Triangle <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Cloneable">
+            
+              <p class="site-author-name" itemprop="name">Cloneable</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/CloneableX" title="GitHub &rarr; https://github.com/CloneableX" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:cloneable@163.com" title="E-Mail &rarr; mailto:cloneable@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#树（Tree）"><span class="nav-number">1.</span> <span class="nav-text">树（Tree）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#树长什么样"><span class="nav-number">1.1.</span> <span class="nav-text">树长什么样</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#树的三个属性"><span class="nav-number">1.2.</span> <span class="nav-text">树的三个属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉树（Binary-Tree）"><span class="nav-number">2.</span> <span class="nav-text">二叉树（Binary Tree）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#二叉树中的特殊类型"><span class="nav-number">2.1.</span> <span class="nav-text">二叉树中的特殊类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#遍历二叉树"><span class="nav-number">2.2.</span> <span class="nav-text">遍历二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#代码实现"><span class="nav-number">2.2.1.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#遍历的时间复杂度"><span class="nav-number">2.2.2.</span> <span class="nav-text">遍历的时间复杂度</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cloneable</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">108k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">1:30</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'uf12PDmrUOMN7OhqQCS0OF7l-gzGzoHsz',
+    appKey: 'MX31bCoCIzO71iuoj69S52dt',
+    placeholder: '用你的评论来撩我哟！😉',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: 'zh-cn' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/algolia-search.js?v=7.1.2"></script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      const selection = document.getSelection();
+      const selected = selection.rangeCount > 0 ? selection.getRangeAt(0) : false;
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+      if (selected) {
+        selection.removeAllRanges();
+        selection.addRange(selected);
+      }
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+
+  
+
+</body>
+</html>
