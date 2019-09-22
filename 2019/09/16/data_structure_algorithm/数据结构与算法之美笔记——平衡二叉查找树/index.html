@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-clo.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-clo.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-clo.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo-clo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: true,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: 'EGCMUT6W5J',
+      apiKey: '29739acf21d37cac5c1dc285cd301f7f',
+      indexName: 'clo_blo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"查询不到结果: ${query}","hits_stats":"找到约 ${hits} 结果，用时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="摘要:  「平衡二叉查找树（Balance Binary Search Tree）」用以解决二叉查找树因不平衡情况而导致的执行效率下降问题，不过为了提高整体操作的效率，基本上使用非严格的平衡二叉查找树，代表是「红黑树（Red-Black Tree）」。  平衡才是美前面关于二叉查找树的文章已经提到过，平衡情况下二叉查找树的时间复杂度才是 $O(\log{n})$，但按照之前二叉查找树的插入、删除操">
+<meta name="keywords" content="数据结构与算法之美笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法之美笔记——平衡二叉查找树">
+<meta property="og:url" content="https://www.cloneable.cn/2019/09/16/data_structure_algorithm/数据结构与算法之美笔记——平衡二叉查找树/index.html">
+<meta property="og:site_name" content="Cloneable的小站">
+<meta property="og:description" content="摘要:  「平衡二叉查找树（Balance Binary Search Tree）」用以解决二叉查找树因不平衡情况而导致的执行效率下降问题，不过为了提高整体操作的效率，基本上使用非严格的平衡二叉查找树，代表是「红黑树（Red-Black Tree）」。  平衡才是美前面关于二叉查找树的文章已经提到过，平衡情况下二叉查找树的时间复杂度才是 $O(\log{n})$，但按照之前二叉查找树的插入、删除操">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2019/09/22/WcTCogusAk8enLK.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/22/ZodXuLwEQpb1N7z.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/22/K9c8h4GgrkliyfM.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/21/kqyflGUVphdwzve.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/21/TtaUhAZOiILbJjQ.png">
+<meta property="og:updated_time" content="2019-09-22T14:19:11.991Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构与算法之美笔记——平衡二叉查找树">
+<meta name="twitter:description" content="摘要:  「平衡二叉查找树（Balance Binary Search Tree）」用以解决二叉查找树因不平衡情况而导致的执行效率下降问题，不过为了提高整体操作的效率，基本上使用非严格的平衡二叉查找树，代表是「红黑树（Red-Black Tree）」。  平衡才是美前面关于二叉查找树的文章已经提到过，平衡情况下二叉查找树的时间复杂度才是 $O(\log{n})$，但按照之前二叉查找树的插入、删除操">
+<meta name="twitter:image" content="https://i.loli.net/2019/09/22/WcTCogusAk8enLK.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://www.cloneable.cn/2019/09/16/data_structure_algorithm/数据结构与算法之美笔记——平衡二叉查找树/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>数据结构与算法之美笔记——平衡二叉查找树 | Cloneable的小站</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/CloneableX" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cloneable的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.cloneable.cn/2019/09/16/data_structure_algorithm/数据结构与算法之美笔记——平衡二叉查找树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cloneable">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cloneable的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据结构与算法之美笔记——平衡二叉查找树
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-16 16:45:02" itemprop="dateCreated datePublished" datetime="2019-09-16T16:45:02+08:00">2019-09-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-09-22 22:19:11" itemprop="dateModified" datetime="2019-09-22T22:19:11+08:00">2019-09-22</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据结构与算法/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/09/16/data_structure_algorithm/数据结构与算法之美笔记——平衡二叉查找树/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/09/16/data_structure_algorithm/数据结构与算法之美笔记——平衡二叉查找树/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">5.8k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">5 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>摘要:</strong></p>
+<blockquote>
+<p>「<strong>平衡二叉查找树（Balance Binary Search Tree）</strong>」用以解决二叉查找树因不平衡情况而导致的执行效率下降问题，不过为了提高整体操作的效率，基本上使用非严格的平衡二叉查找树，代表是「<strong>红黑树（Red-Black Tree）</strong>」。</p>
+</blockquote>
+<h3 id="平衡才是美"><a href="#平衡才是美" class="headerlink" title="平衡才是美"></a>平衡才是美</h3><p>前面关于二叉查找树的文章已经提到过，平衡情况下二叉查找树的时间复杂度才是 $O(\log{n})$，但按照之前二叉查找树的插入、删除操作听之任之，不加以干预，二叉查找树的平衡性迟早会被破坏，于是引入了平衡二叉查找树。</p>
+<p>对平衡二叉查找树的定义是<strong>树中任意节点的左右子树高度之差不大于 1</strong>，这样可以确保某个子树不会高度过大，影响二叉查找树的平衡。节点可以通过存储左右子树高度差确定是否符合平衡的定义，当插入或者删除操作时更新相应节点的高度，而查找操作并不受到影响。</p>
+<h3 id="不平衡到平衡"><a href="#不平衡到平衡" class="headerlink" title="不平衡到平衡"></a>不平衡到平衡</h3><p>上一小节已经告诉我们如何确定一棵树是否平衡，或者树中的某个节点是否保持平衡，但如果出现不平衡的情况我们需要如何将其转换为平衡状态？一般「<strong>左旋</strong>」「<strong>右旋</strong>」是解决此问题的方法，其实左旋应该称为<strong>以某个节点为中心向左旋转</strong>，右旋与之相对应，应该被称为<strong>以某个节点为中心向右旋转</strong>，在左旋和右旋的操作中一般会有两个关键的节点，一个为「root」节点，一个为「pivot」节点，此处的 root 并不是指树的根节点，可以是树中的任意节点，可以理解为以此节点为根节点，左旋和右旋的操作就是以 pivot 节点为中心节点进行左右旋转。</p>
+<h3 id="几种不平衡情况"><a href="#几种不平衡情况" class="headerlink" title="几种不平衡情况"></a>几种不平衡情况</h3><p>虽然二叉查找树有多种不平衡的具体情况，但最终被抽象总结为四种情况，接下来我们一起分析一下。</p>
+<h4 id="左-左（L-L）"><a href="#左-左（L-L）" class="headerlink" title="左-左（L-L）"></a>左-左（L-L）</h4><p>此情况下 root 节点的左子树高度大于右子树，且高度差大于 1，而 pivot 为 root 的左子节点，而导致不平衡的是此节点的左子树，此时为了保持平衡需要进行右旋操作，将 root 移至 pivot 右子节点，pivot 的右子节点移至 root 的左子节点。</p>
+<p>为何这样旋转？因为将 pivot 右旋时 pivot 会顶替 root 节点位置，所以 root 节点需要重新放置，按照二叉查找树的规则，pivot 是 root 的左子节点，root 节点值大于 pivot 值，root 节点应该放置在 pivot 的右子节点。如果 pivot 本身存在右子节点，那右子节点的位置将被 root 节点顶替，也需要重新放置。作为 pivot 的右子节点数值肯定大于 pivot 节点，而此节点依然属于原 root 节点的左子树，数值小于 root 节点，所以此节点应该放置于 root 节点的 左子节点处。</p>
+<h4 id="右-右（R-R）"><a href="#右-右（R-R）" class="headerlink" title="右-右（R-R）"></a>右-右（R-R）</h4><p>右-右情况正好与左-左情况相反，当然也使用相反的旋转——右旋，将 root 节点移至 pivot 节点的左子节点处，将 pivot 节点的原左子节点移至 root 节点的右子节点，当然原因与左-左情况的相似。除了这两种情况外还有另外两种情况，分别是「<strong>左-右（L-R）</strong>」「<strong>右-左（R-L）</strong>」，左-右需要先进行左旋再进行右旋，右-左要先进行右旋再进行左旋，具体情况可以根据下图分析。</p>
+<p><img src="https://i.loli.net/2019/09/22/WcTCogusAk8enLK.png" alt="L-R-01.png"><br><img src="https://i.loli.net/2019/09/22/ZodXuLwEQpb1N7z.png" alt="L-R-02.png"></p>
+<h3 id="AVL-树"><a href="#AVL-树" class="headerlink" title="AVL 树"></a>AVL 树</h3><p>AVL 树是平衡二叉查找树的代表，通过左右子树的高度差来判断是否平衡，如果出现不平衡情况，需要根据具体非平衡形态进行相应的左右旋操作，但平衡二叉查找树的节点需要存储该节点的高度，所以每个节点的父节点可以通过左右子节点的高度属性快速判断左右子树是否出现了不平衡。在平衡性的实现上我采用左子树高度减右子树高度的方式，相减结果等于 0 表示两个子树高度一致，当结果大于 1 时表示左子树更高，当结果小于 -1 时表示右子树更高，这样的结果更加有利于判断当前树状处于哪种不平衡形态下。</p>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AvlTree</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Node root;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Node <span class="title">insertNode</span><span class="params">(Node node, <span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</span><br><span class="line">            Node leaf = <span class="keyword">new</span> Node(num);</span><br><span class="line">            <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</span><br><span class="line">                root = leaf;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> leaf;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (num &lt; node.data) &#123;</span><br><span class="line">            node.left = insertNode(node.left, num);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (num &gt; node.data) &#123;</span><br><span class="line">            node.right = insertNode(node.right, num);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> node;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> balance = getBalance(node);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (balance &gt; <span class="number">1</span> &amp;&amp; num &lt; node.left.data) &#123;</span><br><span class="line">            rotateRight(node);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (balance &lt; -<span class="number">1</span> &amp;&amp; num &gt; node.right.data) &#123;</span><br><span class="line">            rotateLeft(node);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (balance &gt; <span class="number">1</span> &amp;&amp; num &gt; node.left.data) &#123;</span><br><span class="line">            rotateLeft(node.left);</span><br><span class="line">            rotateRight(node);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        node.height = updateNodeHeight(node);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getNodeHeight</span><span class="params">(Node node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> node == <span class="keyword">null</span> ? <span class="number">0</span> : node.height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Node&gt; <span class="title">sortNode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;Node&gt; nodes = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        getSortNodes(nodes, root);</span><br><span class="line">        <span class="keyword">return</span> nodes;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">getSortNodes</span><span class="params">(List&lt;Node&gt; sortNodes, Node node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (node.left == <span class="keyword">null</span> &amp;&amp; node.right == <span class="keyword">null</span>) &#123;</span><br><span class="line">            sortNodes.add(node);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        getSortNodes(sortNodes, node.left);</span><br><span class="line">        sortNodes.add(node);</span><br><span class="line">        getSortNodes(sortNodes, node.right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getBalance</span><span class="params">(Node node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getNodeHeight(node.left) - getNodeHeight(node.right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Node <span class="title">getRoot</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getHeight</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> root.height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotateRight</span><span class="params">(Node rRoot)</span> </span>&#123;</span><br><span class="line">        Node pivot = rRoot.left;</span><br><span class="line">        Node pivotR = pivot.right;</span><br><span class="line"></span><br><span class="line">        pivot.right = rRoot;</span><br><span class="line">        rRoot.left = pivotR;</span><br><span class="line"></span><br><span class="line">        updateRotateNodeState(rRoot, pivot);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">updateRotateNodeState</span><span class="params">(Node rRoot, Node pivot)</span> </span>&#123;</span><br><span class="line">        rRoot.height = updateNodeHeight(rRoot);</span><br><span class="line">        pivot.height = updateNodeHeight(pivot);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (rRoot == root) &#123;</span><br><span class="line">            root = pivot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">updateNodeHeight</span><span class="params">(Node rRoot)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span> + Math.max(getNodeHeight(rRoot.left), getNodeHeight(rRoot.right));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotateLeft</span><span class="params">(Node rRoot)</span> </span>&#123;</span><br><span class="line">        Node pivot = rRoot.right;</span><br><span class="line">        Node pivotL = pivot.left;</span><br><span class="line"></span><br><span class="line">        pivot.left = rRoot;</span><br><span class="line">        rRoot.right = pivotL;</span><br><span class="line"></span><br><span class="line">        updateRotateNodeState(rRoot, pivot);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> data;</span><br><span class="line">        <span class="keyword">private</span> Node left;</span><br><span class="line">        <span class="keyword">private</span> Node right;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> height = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.data = data;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>AVL 树的实现代码中只是实现了插入节点的操作，删除节点与之类似，按照二叉树删除节点的的规则将节点删除后判断节点是否处于平衡状态，如果未处于平衡状态就根据非平衡形态进行相应的旋转操作。</p>
+<h3 id="非严格平衡二叉树"><a href="#非严格平衡二叉树" class="headerlink" title="非严格平衡二叉树"></a>非严格平衡二叉树</h3><p>虽然 AVL 树利用节点的旋转保持了整个树的平衡，但是每次插入节点或者删除节点都需要进行相关节点的旋转操作，必然会使操作效率下降，为了在二叉树的平衡性与执行效率之间找到一个平衡点，就提出了非严格定义的平衡二叉树，这样的二叉树不需要遵守任意节点的左右子树高度差不大于 1 的规定，而只要保持高度与 $\log_2{n}$ 不会相差过大即可。</p>
+<p>说理论过于抽象，我们举个实际的例子，比如非严格平衡二叉查找树的代表——「<strong>红黑树（Red-Black Tree/R-B Tree）</strong>」，红黑树也是二叉树，不同的是它的节点会是红色或者黑色，一棵红黑树需要满足以下几个条件</p>
+<blockquote>
+<ul>
+<li>根节点必须为黑色节点</li>
+<li>叶子节点都是黑色的空节点（NIL）</li>
+<li>两个相邻节点不能同时为红色节点，也就是说红色节点都是被黑色节点隔开的</li>
+<li>从任意节点出发，到达其可达的叶子节点路径上的黑色节点数量相同</li>
+</ul>
+</blockquote>
+<p>第 1,3,4 点都比较容易理解，第 2 条保证叶子节点都为黑色空节点是为了简化红黑树的实现，现在的分析我们可以暂时不关心第 2 个定义，按照规则我们可以画一棵红黑树。</p>
+<p><img src="https://i.loli.net/2019/09/22/K9c8h4GgrkliyfM.png" alt></p>
+<p>那红黑树的平均高度是多少？我们可以先把红色节点移除，使黑色节点形成四叉树，将四叉树节点移动转换为完全二叉树时可以看出，四叉树高度是低于相同节点数量下的完全二叉树的，也就是只由黑色节点组成的四叉树高度是低于 $\log_2{n}$ 的，因为相邻红色节点需要被黑色节点隔开，加入红色后的红黑树高度是低于 $2\log_2{n}$ 的，其实也是相对平衡的，并且在保持平衡的情况下使插入和删除操作都保持了较高的执行效率，如果红黑树碰到破坏平衡的情况，也就是破坏红黑树的第 3,4 条定义时可以按照红黑树的对应操作步骤使用左右旋使其重新符合定义。</p>
+<p><img src="https://i.loli.net/2019/09/21/kqyflGUVphdwzve.png" alt><br><img src="https://i.loli.net/2019/09/21/TtaUhAZOiILbJjQ.png" alt></p>
+<p>通过红黑树我们可以看出其实平衡的定义可以比较宽泛，我们希望解决的二叉查找树平衡性问题其实是防止其退化为链表，也就是左右子树的高度差距极大，而保持平衡其实是在保持二叉查找树的对称性，避免高度差距极大的左右子树情况，降低二叉查找树的整体高度，以此保证二叉查找树的执行效率。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>由于平衡性问题会极大影响二叉查找树的执行效率，业界以左右子树高度差不大于 1 作为二叉查找树的界定标准，通过左旋或者右旋的方式来维护树的平衡，AVL 树是这种严格定义平衡二叉查找树代表，不过为了保持平衡导致操作的效率受到影响，为了平衡这种影响，业界采用更加广泛的平衡定义，同时也衍生出红黑树这样的非严格定义的平衡二叉查找树代表，在操作性能和平衡性之间找到了平衡点。</p>
+<hr>
+<blockquote>
+<p><strong>文章中如有问题欢迎留言指正<br>本章节代码已经上传GitHub，可<a href="https://github.com/CloneableX/data_structures_algorithm/blob/master/src/tree/AvlTree.java" target="_blank" rel="noopener">点击跳转</a>查看代码详情。<br>数据结构与算法之美笔记系列将会做为我对王争老师此专栏的学习笔记，如想了解更多王争老师专栏的详情请到极客时间自行搜索。</strong></p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Cloneable</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://www.cloneable.cn/2019/09/16/data_structure_algorithm/数据结构与算法之美笔记——平衡二叉查找树/" title="数据结构与算法之美笔记——平衡二叉查找树">https://www.cloneable.cn/2019/09/16/data_structure_algorithm/数据结构与算法之美笔记——平衡二叉查找树/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构与算法之美笔记/" rel="tag"># 数据结构与算法之美笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/16/leetcode/sort/easy/leetcode题号1122_RelativeSortArray/" rel="next" title="leetcode 题号1122 Relative Sort Array">
+                <i class="fa fa-chevron-left"></i> leetcode 题号1122 Relative Sort Array
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/22/tip/other/JavaScript正则匹配的Unicode模式/" rel="prev" title="JavaScript 正则匹配的 Unicode 模式">
+                JavaScript 正则匹配的 Unicode 模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Cloneable">
+            
+              <p class="site-author-name" itemprop="name">Cloneable</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">46</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/CloneableX" title="GitHub &rarr; https://github.com/CloneableX" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:cloneable@163.com" title="E-Mail &rarr; mailto:cloneable@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#平衡才是美"><span class="nav-number">1.</span> <span class="nav-text">平衡才是美</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不平衡到平衡"><span class="nav-number">2.</span> <span class="nav-text">不平衡到平衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几种不平衡情况"><span class="nav-number">3.</span> <span class="nav-text">几种不平衡情况</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#左-左（L-L）"><span class="nav-number">3.1.</span> <span class="nav-text">左-左（L-L）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#右-右（R-R）"><span class="nav-number">3.2.</span> <span class="nav-text">右-右（R-R）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AVL-树"><span class="nav-number">4.</span> <span class="nav-text">AVL 树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-number">4.1.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非严格平衡二叉树"><span class="nav-number">5.</span> <span class="nav-text">非严格平衡二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cloneable</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">125k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">1:45</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'uf12PDmrUOMN7OhqQCS0OF7l-gzGzoHsz',
+    appKey: 'MX31bCoCIzO71iuoj69S52dt',
+    placeholder: '用你的评论来撩我哟！😉',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: 'zh-cn' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/algolia-search.js?v=7.1.2"></script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      const selection = document.getSelection();
+      const selected = selection.rangeCount > 0 ? selection.getRangeAt(0) : false;
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+      if (selected) {
+        selection.removeAllRanges();
+        selection.addRange(selected);
+      }
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+
+  
+
+</body>
+</html>
